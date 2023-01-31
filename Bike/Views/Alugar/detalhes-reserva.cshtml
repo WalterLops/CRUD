@@ -1,0 +1,167 @@
+﻿<!--model BikeVale.Models.Bicicleta;-->
+@model BikeVale.Models.Aluga;
+@using MySqlConnector;
+@{
+    ViewData["Title"] = "Detalhes";
+    var id = Model.IdBicicleta;
+    var Id_bicicleta = 0;
+    var Modelo = "";
+    var Modalidade = "";
+    var Qtd_marchas = 0;
+    var Status_emprestimo = 0;
+    var valor = "0";
+    var totalDias = 0;
+
+    if (id == 599)
+        valor = "70,00";
+    if (id == 600)
+        valor = "90,00";
+
+
+    using (MySqlConnection connection = new
+    MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+    {
+        connection.Open();
+        using (MySqlCommand command = new MySqlCommand($"SELECT * FROM bicicleta where bicicleta.Id_bicicleta = {id};",
+        connection))
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                Id_bicicleta = Convert.ToInt32(reader["Id_bicicleta"]);
+                Modelo = (reader["Modelo"]).ToString();
+                Modalidade = (reader["Modalidade"]).ToString();
+                Qtd_marchas = Convert.ToInt32(reader["Qtd_marchas"]);
+                Status_emprestimo = Convert.ToInt32(reader["Status_emprestimo"]);
+            }
+        }
+    }
+}
+
+<div class="container">
+    <h1 class="title-h1">Reservar: @Modelo | Data inicio teste @Model.Datainicio</h1>
+
+    <div class="container text-center">
+
+        <div class="row">
+            <div class="col">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <img src="/images/img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S">
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="/images/img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S" class="imgModal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="info-bike col">
+                <div class="info-ln">
+                    <h3>Detalhes</h3>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>Medida: </td>
+                                <td>17</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>Estilo: </td>
+                                <td>@Modalidade</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>Marchas: </td>
+                                <td>@Qtd_marchas</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <h3>Recursos</h3>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Aro 29"</td>
+                            <td>Freio disco hidráulico</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"></th>
+                            <td>Grupo Sram</td>
+                            <td>Pneu 3.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <form asp-action="ConfirmReserva1">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="row">
+                <div class="col">
+                    <label for="data-inicio" class="label-data-reserva">Data de início:</label>
+                    <input type="datetime-local" id="data-inicio" class="input-data-reserva" name="data-inicio" value=""
+                        min="now" max="2024-01-01T00:00">
+                </div>
+                <div class="col">
+                    <label for="data-devolucao" class="label-data-reserva">Data devolução:</label>
+                    <input type="datetime-local" id="data-devolucao" class="input-data-reserva" name="data-devolucao"
+                        value="" min="2023-01-01T00:00" max="2024-01-01T00:00">
+                </div>
+                <div class="col button-data">
+                    <input type="submit" value="Alugar" class="btn btn-green btn-decorator" asp-for="IdBicicleta" value="@Id_bicicleta" />
+                    <a asp-for="IdBicicleta" class="nav-link text-white" asp-area="" asp-controller="Alugar"
+                        asp-action="ConfirmReserva1" onclick="calcularIntervalo()">Continuar</a>
+                </div>
+            </div>
+        </form>
+
+
+        <script>
+            const date = new Date();
+            date.setHours(date.getHours() - 3);
+            document.getElementById("data-inicio").value = date.toISOString().slice(0, 16);
+
+            function calcularIntervalo() {
+                var dataInicio = document.getElementById("data-inicio").value;
+                var dataFim = document.getElementById("data-devolucao").value;
+
+                if (dataInicio != '' && dataFim != '') {
+                    if (dataInicio > dataFim) {
+
+
+                        alert("Insira intervalo válido");
+                        document.getElementById("data-inicio").value = '';
+                        document.getElementById("data-devolucao").value = '';
+
+                    }
+
+                    /*else {
+                        var diferencaEmMilisegundos = new Date(dataFim) - new Date(dataInicio);
+                        var intervalo = Math.round(diferencaEmMilisegundos / (1000 * 60 * 60 * 24));
+                        intervalo > 1 ?  = intervalo + " dias" : dat.textContent = intervalo + " dia" ;
+                    }
+                    */
+                }
+
+            }
+        </script>
+    </div>
+
+
+    <div class="padding"></div>
+</div>

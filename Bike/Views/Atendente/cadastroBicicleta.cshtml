@@ -1,0 +1,56 @@
+@model BikeVale.Models.Bicicleta;
+@using BikeVale.Models;
+@using MySqlConnector;
+@{
+    ViewData["Title"] = "CadastroBicicleta";
+    Random random = new Random();
+    var idBicicleta = random.Next(1, 10000);
+    var ale = Model.result;
+}
+<div class="padding"></div>
+<div class="container">
+    <div class="row title-h1">
+        <h2>Cadastar Bike</h2>
+    </div>
+    <div class="row font-midle">
+        <h2>Informações básicas</h2>
+    </div>
+    <div class=" row">
+        <form asp-action="cadastroBicicletaPost" id="formulario">
+            <div class="input-group mb-3 col">
+                <span class="input-group-text" id="basic-addon1">#</span>
+                <input asp-for="Modelo" class="form-control" placeholder="Nome Bike" />
+                <span asp-validation-for="Modelo" class="text-danger"></span>
+            </div>
+            <div class="input-group mb-3 col">
+                <span class="input-group-text" id="basic-addon1">#</span>
+                <input asp-for="Modalidade" class="form-control" placeholder="Modalidade" />
+                <span asp-validation-for="Modalidade" class="text-danger"></span>
+            </div>
+            <div class="input-group mb-3 col">
+                <span class="input-group-text" id="basic-addon1">#</span>
+                <input asp-for="QtdMarchas" class="form-control" placeholder="Marchas" />
+                <span asp-validation-for="QtdMarchas" class="text-danger"></span>
+            </div>
+            <div class="input-group mb-3 col">
+                <span class="input-group-text" id="basic-addon1">#</span>
+                <input asp-for="IdBicicleta" value=@idBicicleta class="form-control" />
+                <span asp-validation-for="IdBicicleta" class="text-danger"></span>
+            </div>
+            <div class="col text-end">
+                <input onclick="alerta()" type="submit" value="Salvar" class="btn btn-green btn-decorator"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function alerta(){
+        alert("Dados salvos com sucesso!");
+    }
+    
+    function limparFormulario() {
+        document.getElementById("formulario").reset();
+    }
+
+</script>

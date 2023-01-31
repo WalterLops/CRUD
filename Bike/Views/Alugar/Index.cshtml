@@ -1,0 +1,107 @@
+﻿@model BikeVale.Models.Bicicleta;
+@using MySqlConnector;
+@using System.Data;
+@{
+    ViewData["Title"] = "Aluguel";
+}
+<div class="container">
+    <div class="title-r2">
+        <h1>Modelos disponíveis</h1>
+    </div>
+    <p>Existem muitos estilos diferentes de bicicletas que podem atender às suas necessidades. Estes incluem:</p>
+    <ul>
+        <li>bicicleta de montanha MTB</li>
+        <li>bicicleta de estrada</li>
+        <li>bicicleta de montanha e-bike</li>
+    </ul>
+</div>
+@{
+    MySqlConnection connection;
+    try
+    {
+        //Conexão de Walter
+        connection = new MySqlConnection("server=localhost;userid=teste@;password=12346;database=bancotp");
+        connection.Open();
+    }
+    catch
+    {
+        //Conexão de Igor
+        connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp");
+        connection.Open();
+    }
+    MySqlCommand cliente = new MySqlCommand("SELECT Bicicleta.Id_bicicleta, Bicicleta.Modelo, Bicicleta.Modalidade, Bicicleta.Qtd_marchas, Bicicleta.Status_emprestimo from Bicicleta;", connection);
+    MySqlDataAdapter adapter = new MySqlDataAdapter();
+    adapter.SelectCommand = cliente;
+    DataTable tabela = new DataTable();
+    adapter.Fill(tabela);
+    connection.Close();
+    foreach (var a in tabela.AsEnumerable())
+    {
+        <div class="container ">
+            <div class="row border rounded border-light-subtle">
+                <div class="col">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <img src="/images/img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S">
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="/images/img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S" class="imgModal">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-bike col">
+                    <h3>@a["Modelo"].ToString()</h3>
+                    <div class="info-ln">
+                        <div>
+                            <span>Medida: </span>
+                        </div>
+                        <div>
+                            <span>Modalidade: @a["Modalidade"]</span>
+                        </div>
+                        <div><span>Marchas: @a["Qtd_marchas"]</span></div>
+                        <div><span> A partir de: R$ 0,00 / dia </span></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <h3>Recursos</h3>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Aro 29"</td>
+                                <td>Freio disco hidráulico</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Grupo Sram</td>
+                                <td>Pneu 3.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <form asp-action="ConfirmReserva1">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="IdBicicleta" class="form-idBike invisivel"></label>
+                            <input asp-for="IdBicicleta" class="invisivel" value='@a["Id_bicicleta"]' class="form-idBike" />
+                            <span asp-validation-for="IdBicicleta" class="form-idBike"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Alugar" class="btn btn-green" />
+                            <!--<a class="nav-link text-white" asp-area="" asp-controller="Alugar" asp-action="ConfirmReserva1">Alugar</a>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}

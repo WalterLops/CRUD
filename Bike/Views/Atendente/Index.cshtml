@@ -1,0 +1,141 @@
+@using MySqlConnector;
+@using System.Data;
+@{
+    ViewData["Title"] = "Atendente";
+}
+<div class="container">
+
+    <div class="padding"></div>
+
+    <div class="row">
+        <div class="col">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="col">
+            <h2>
+                Olá, atendente, Claudio
+            </h2>
+        </div>
+        <div class="col"><button type="button" class="btn btn-danger">Sair</button></div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="imgDashBoard">
+                <a href="#">
+                    <form asp-action="CadastroCliente" class="btnAtendente">
+                    <button type="submit">
+                        <img src="images\DashBoard\db1.png" alt="">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                            </div>
+                    </button>
+                    </form>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="imgDashBoard">
+                
+                <a href="#">
+                    <form asp-action="BicicletasDisponiveis" class="btnAtendente">
+                        <button asp-action="BicicletasDisponiveis">
+                            <img src="images\DashBoard\db2.png" alt="">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                            </div>
+                        </button>
+                    </form>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="imgDashBoard">
+                <a href="#">
+                    <form asp-action="AtendentesCadastrados" class="btnAtendente">
+                        <button asp-action="AtendentesCadastrados">
+                            <img src="images\DashBoard\db3.png" alt="">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                            </div>
+                        </button>
+                    </form>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="imgDashBoard">
+                <a href="#">
+                    <form asp-action="HistoricoBikes" class="btnAtendente">
+                        <button asp-action="HistoricoBikes">
+                            <img src="images\DashBoard\db4.png" alt="">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                            </div>
+                        </button>
+                    </form>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="padding"></div>
+
+    <div class="row">
+        <div class="col">
+            <div class="imgDashBoard">
+                <a href="#">
+                    <form asp-action="cadastroClientePost" class="btnAtendente">
+                        <button asp-action="cadastroClientePost">
+                            <img src="images\DashBoard\db5.png" alt="">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                            </div>
+                        </button>
+                    </form>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="imgDashBoard">
+                <a href="#">
+                    <form asp-action="cadastroBicicletaPost">
+                        <button asp-action="cadastroBicicletaPost">
+                            <img src="images\DashBoard\db6.png" alt="">
+                        </button>
+                    </form>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="imgDashBoard">
+                <a href="#">
+                    <form asp-action="CadastroAtendente">
+                        <button asp-action="CadastroAtendente">
+                            <img src="images\DashBoard\db7.png" alt="">
+                        </button>
+                    </form>
+                </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="imgDashBoard">
+                <a href="#">
+                    <form asp-action="BicicletaManutecao" class="btnAtendente">
+                        <button asp-action="BicicletaManutecao">
+                            <img src="images\DashBoard\db8.png" alt="">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                            </div>
+                        </button>
+                    </form>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="padding"></div>

@@ -1,0 +1,103 @@
+:root {
+    --color-green: #68E51B;
+}
+
+img {
+    width: 240px;
+    height: 150px;
+}
+
+.border {
+    border-left: 10px !important;
+    border-right: 10px !important;
+
+}
+
+.title-r {
+    background-color: var(--color-green);
+    color: #ffffff;
+    bottom: 10px;
+}
+
+.title-h1 {
+    color: var(--color-green);
+    padding: 30px 0 20px 0;
+}
+
+
+.title-h2 {
+    color: var(--color-green);
+    padding: 20px 0px 13px 19px;
+    font-size: 26px;
+}
+
+
+h3 {
+    color: var(--color-green);
+}
+
+.btn-green {
+    background-color: var(--color-green);
+    color: #ffffff;
+}
+
+.btn-green:hover {
+    background-color: #64d41e;
+    color: #ffffff;
+}
+
+h2,
+h3 {
+    font-family: "Montserrat", Helvetica;
+}
+
+.title1 {
+    padding: 2rem 8rem 1rem 8rem;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-decorator a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style-image: url('../img/check-square.svg');
+}
+
+.imgModal {
+    width: 100%;
+    height: 100%;
+}
+
+.label-data-reserva {
+    color: gray;
+    padding: 0px 10px 0px 10px;
+}
+
+.input-data-reserva {
+    border-color: var(--color-green);
+    color: grey;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.button-data {
+    width: 50%;
+}
+
+.padding {
+    padding-top: 3%;
+}
+
+.bg-gray {
+    background-color: gray;
+    padding-bottom: 20px;
+}
+
+.label-manutencao{
+    font-size: 25px;
+    padding-top: 10px;
+  }

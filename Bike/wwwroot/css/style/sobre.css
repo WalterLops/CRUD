@@ -1,0 +1,17 @@
+:root {
+    --color-green: #68E51B;
+}
+
+.title-about{
+    color: var(--color-green);
+}
+
+#line{
+    width: 100%;
+    border: 1px solid var(--color-green);
+    margin: 10px 0px 25px 0px;
+}
+
+.video{
+    width: 100%;
+}

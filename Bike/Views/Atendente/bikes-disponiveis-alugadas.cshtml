@@ -1,0 +1,181 @@
+@model BikeVale.Models.Bicicleta;
+@using BikeVale.Models;
+@using MySqlConnector;
+@{
+    ViewData["Title"] = "ClientesCadastrados";
+    var Id_bicicleta = 0;
+    var Modelo = "";
+    var Modalidade = "";
+    var Qtd_marchas = 0;
+    var Status_emprestimo = 0;
+
+
+    List<Bicicleta> Listabicicleta = new List<Bicicleta>();
+
+    using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+    {
+        connection.Open();
+        using (MySqlCommand command = new MySqlCommand($"SELECT * From bicicleta;", connection))
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                Id_bicicleta = Convert.ToInt32(reader["Id_bicicleta"]);
+                Modelo = (reader["Modelo"]).ToString();
+                Modalidade = (reader["Modalidade"]).ToString();
+                Qtd_marchas = Convert.ToInt32(reader["Qtd_marchas"]);
+                Status_emprestimo = Convert.ToInt32(reader["Status_emprestimo"]);
+
+                Bicicleta c1 = new Bicicleta(Id_bicicleta, Modelo, Modalidade, Qtd_marchas, Status_emprestimo);
+                Listabicicleta.Add(c1);
+            }
+        }
+    }
+}
+
+
+
+
+<div class="container">
+    <h1 class="title-h1">Bikes disponiveis e Alugadas</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <img src="../img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S">
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="../img/SPECIALIZED-FUSE-S.jpg " alt="SPECIALIZED-FUSE-S" class="imgModal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-bike col">
+                <h3>Specialized Fuse</h3>
+                <div class="info-ln">
+                    <div><span>Medida:</span></div>
+                    <div><span>Estilo: </span></div>
+                    <div><span>Marchas:</span></div>
+                    <div><span> A partir de:</span></div>
+                </div>
+            </div>
+            <div class="col">
+                <h3>Recursos</h3>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Aro 29"</td>
+                            <td>Freio disco hidráulico</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Grupo Sram</td>
+                            <td>Pneu 3.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-green"><a href="detalhes-reserva.html"
+                        class="nav-link text-white">Alugar</a></button>
+                <button type="button" class="btn bg-danger"><a href="detalhes-reserva.html" class="nav-link text-white"
+                        data-bs-toggle="modal" data-bs-target="#modalManutencao01">Dar manutenção</a></button>
+                <!-- Modal Manutenção-->
+                <div class="modal fade" id="modalManutencao01" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="modalManutencao01Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <form action="Post">
+                                    <div class="row">
+                                        <label for="preco" class="label-manutencao col">Preço:</label>
+                                        <input type="text" id="preco" placeholder="0,00" class="col-md-8">
+                                    </div>
+
+                                    <div class="row">
+                                        <label for="desc" class="label-manutencao">Descrição da mautenção:</label>
+                                        <textarea name="desc" id="desc" cols="30" rows="10"
+                                            placeholder="Foi feito a troca de..."></textarea>
+                                    </div>
+
+                                    <div class="row padding"><input type="button" value="Criar manutenção"
+                                            class="btn btn-green"></div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="padding"></div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <img src="../img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S">
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="../img/SPECIALIZED-FUSE-S.jpg " alt="SPECIALIZED-FUSE-S" class="imgModal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-bike col">
+                <h3>Specialized Fuse</h3>
+                <div class="info-ln">
+                    <div><span>Medida:</span></div>
+                    <div><span>Estilo: </span></div>
+                    <div><span>Marchas:</span></div>
+                    <div><span> A partir de:</span></div>
+                </div>
+            </div>
+            <div class="col">
+                <h3>Recursos</h3>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Aro 29"</td>
+                            <td>Freio disco hidráulico</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Grupo Sram</td>
+                            <td>Pneu 3.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn bg-primary"><a href="detalhes-reserva.html"
+                        class="nav-link text-white">Devolver</a></button>
+            </div>
+            <div class="padding"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,135 @@
+
+@model BikeVale.Models.Bicicleta;
+@{
+    @using BikeVale.Models;
+    @using MySqlConnector;
+
+    ViewData["Title"] = "Histórico de Bikes";
+    var IdBicicleta = 0;
+    var Modelo = "";
+    var Modalidade = "";
+    var QtdMarchas = 0;
+    var StatusEmprestimo = 0;
+
+    List<Bicicleta> bicicletas = new List<Bicicleta>();
+
+    using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+    
+    {
+        connection.Open();
+        using (MySqlCommand command = new MySqlCommand($"SELECT bicicleta.Id_bicicleta, bicicleta.Modelo, bicicleta.Modalidade, bicicleta.Qtd_marchas, bicicleta.Status_emprestimo FROM bicicleta;", connection))
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+
+                IdBicicleta = Convert.ToInt32(reader["Id_bicicleta"]);
+                Modelo = (reader["Modelo"]).ToString();
+                Modalidade = (reader["Modalidade"]).ToString();
+                QtdMarchas = Convert.ToInt32(reader["Qtd_marchas"]);
+                StatusEmprestimo = Convert.ToInt32(reader["Status_emprestimo"]);
+
+                var c1 = new Bicicleta(IdBicicleta, Modelo, Modalidade, QtdMarchas, StatusEmprestimo);
+                bicicletas.Add(c1);
+            }
+            
+        }
+    }
+    
+
+}
+
+<div class="container">
+    <div class="title-h1">
+        <h1>Histórico de Aluguéis</h1>
+    </div>
+    <div class="accordion" id="accordionHistoricoDetalhes">
+        @{    foreach (Bicicleta bicicleta in bicicletas)
+    {
+        <div class="accordion-item">
+
+            <h2 class="accordion-header" id="heading_@bicicleta.IdBicicleta">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#@bicicleta.IdBicicleta" aria-expanded="false" aria-controls="@bicicleta.IdBicicleta">
+                    @bicicleta.Modelo | 10/01/2023 | 2 dias
+                </button>
+            </h2>
+            <div id="@bicicleta.IdBicicleta" class="accordion-collapse collapse"
+                aria-labelledby="heading_@bicicleta.IdBicicleta"
+                data-bs-parent="#accordionHistoricoDetalhes">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#detalhes_@bicicleta.IdBicicleta">
+                                <img src="/images/img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S">
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="detalhes_@bicicleta.IdBicicleta" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="detalhes_@bicicleta.IdBicicleta"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="/images/img/SPECIALIZED-FUSE-S.jpg " alt="SPECIALIZED-FUSE-S"
+                                                class="imgModal">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-bike col">
+                            <div class="info-ln">
+                                <h3>Detalhes</h3>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td>Medida: </td>
+                                            <td>17</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td>Estilo: </td>
+                                            <td>@bicicleta.Modalidade</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td>Marchas: @bicicleta.QtdMarchas</td>
+                                            <td>12V</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h3>Recursos</h3>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td>Aro 29"</td>
+                                        <td>Freio disco hidráulico</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td>Grupo Sram</td>
+                                        <td>Pneu 3.0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    }}
+</div>
+</div>
+<div class="padding"></div>

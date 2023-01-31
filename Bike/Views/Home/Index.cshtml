@@ -1,0 +1,182 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<style>
+    .carousel-item{
+        background-size: contain;
+        text-shadow: white 0px 0px 2px;
+        font-size: 16px;
+    }
+</style>
+
+<section class="img-fluid">
+    <!---->
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active btn-primary" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="6000">
+                <img src="/images/img/01.png" class="d-block w-100 img-car" alt="" />
+                <div class="carousel-caption d-none d-md-block"></div>
+            </div>
+
+            <div class="carousel-item" data-bs-interval="6000">
+                <img src="/images/img/10.png" class="d-block w-100 img-car" alt="" />
+                <div class="carousel-caption d-none d-md-block">
+                    <!--<p>Aluguel de Bikes</p>
+                    <p>Aluge uma Bike e divirta-se</p>-->
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+<section class="">
+    <div class="grid">
+        <!--<img src="/images/img/04.png" alt="" class="img-section2 img-fluid">-->
+        <div class="conjunto-vid">
+            <button onclick="playPause()" class="btn1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-play-circle-fill" id="vi" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+                </svg>
+            </button>
+            <video id="video1" class="object-fit-fill img-section2 img-fluid">
+                <source src="~/images/img/video.mp4" type="video/mp4" />
+            </video>
+            <script>
+                var myVideo = document.getElementById("video1");
+
+                function playPause() {
+                    if (myVideo.paused) myVideo.play();
+                    else myVideo.pause();
+                    ocultar();
+                }
+
+                function ocultar() {
+                    var display = document.getElementById("vi").style.display;
+
+                    if (display == "" || display == "initial") {
+                        document.getElementById("vi").style.display = "none";
+                    } else {
+                        document.getElementById("vi").style.display = "initial";
+                    }
+                }
+            </script>
+        </div>
+
+        <div class="content-s2">
+            <div>
+                <h2 class="experience">Esperiência</h2>
+                <h2 class="the-ride">de Pedalar</h2>
+                <img class="line-4-2"
+                     src="https://cdn.animaapp.com/projects/63acf9370c5699f0e3a06956/releases/63acf978271484f4b798c6c0/img/line-4-1@2x.svg"
+                     anima-src="https://cdn.animaapp.com/projects/63acf9370c5699f0e3a06956/releases/63acf978271484f4b798c6c0/img/line-4-1@2x.svg"
+                     alt="Line 4" />
+            </div>
+            <p class="nam-sollicitudin-ege-1">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci esse consequatur molestiae corrupti impedit minima nulla delectus. Obcaecati, qui. Et cumque, quas voluptatem reprehenderit numquam nobis sequi commodi ab
+                autem?
+            </p>
+            <div class="montserrat-bold-black-18px downhill-national-series">
+                <div class="space p">
+                    <img src="/images/img/cycle-1@2x.png" alt="" class="imgli" />
+                    <p class="pp">DOWNHILL NATIONAL SERIES</p>
+                </div>
+                <div class="space p">
+                    <img src="/images/img/cycle-1@2x.png" alt="" class="imgli" />
+                    <p class="pp">CROSS COUNTRY</p>
+                </div>
+                <div class="space p">
+                    <img src="/images/img/cycle-1@2x.png" alt="" class="imgli" />
+                    <p class="pp">GOAT FARM MTB PARK</p>
+                </div>
+                <div>
+                    <button type="button" class="btn2 montserrat-bold-black-18px">
+                        <a class="nav-link" asp-area="" asp-controller="Alugar" asp-action="Index">
+                            Escolha a sua bike
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right green" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+                            </svg>
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="2000">
+                <div><img src="/images/img/fundo3.jpg" class="imgs3 img d-block w-100 img-car" alt="..." /></div>
+                <div>
+                    <h2 class="title">Marcas que utilizamos em nossas Bikes</h2>
+                </div>
+                <div class="grid2">
+                    <article>
+                        <div class="border">
+                            <img src="/images/img/Fox-Racing-Logo.png" alt="" class="imgproduct" />
+                        </div>
+                    </article>
+                    <article>
+                        <div class="border">
+                            <div class="img"><img src="/images/img/senseBike-logoPB.png" alt="" class="imgproduct" /></div>
+                        </div>
+                    </article>
+                    <article>
+                        <div class="border">
+                            <img src="/images/img/logo-sepcialized.png" alt="" class="imgproduct" />
+                        </div>
+                    </article>
+                    <article>
+                        <div class="border">
+                            <div class="img"><img src="/images/img/logo-high-one.png" alt="" class="imgproduct" /></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+                <div class="img">
+                    <img src="/images/img/fundo4.jpg" class="imgs3 d-block w-100 img-car" alt="..." />
+                </div>
+                <div>
+                    <h2 class="title">Marcas que utilizamos em nossas Bikes</h2>
+                </div>
+                <div class="grid2">
+                    <article>
+                        <div class="border">
+                            <img src="/images/img/logo-cannondale.png" alt="" class="imgproduct" />
+                        </div>
+                    </article>
+                    <article>
+                        <div class="border">
+                            <img src="/images/img/logo-scott.png" alt="" class="imgproduct" />
+                        </div>
+                    </article>
+                    <article>
+                        <div class="border">
+                            <div class="img"><img src="/images/img/logo-shimano.png" alt="" class="imgproduct" /></div>
+                        </div>
+                    </article>
+                    <article>
+                        <div class="border">
+                            <div class="img"><img src="/images/img/Logo-absolut.png" alt="" class="imgproduct" /></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
