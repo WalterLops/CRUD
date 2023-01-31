@@ -17,6 +17,9 @@ namespace Bike.Controllers
         {
             return View();
         }
+        /*
+         * INICIO BICICLETA
+         */
         [HttpPost]
         public IActionResult BicicletasCadastradas()
         {
@@ -43,9 +46,9 @@ namespace Bike.Controllers
         }
 
         [HttpPost]
-        public IActionResult CadastroCliente()
+        public IActionResult BicicletaManutecao()
         {
-            return View("ClientesCadastrados");
+            return View("bikes-em-munutencao"); 
         }
 
         [HttpPost]
@@ -68,6 +71,20 @@ namespace Bike.Controllers
             }
             return View("cadastroBicicleta", bike);
         }
+        /*
+         * ----------------FIM BICICLETA------------------------
+         */
+
+
+        /*
+         * INICIO CLIENTE
+         */
+        [HttpPost]
+        public IActionResult CadastroCliente()
+        {
+            return View("ClientesCadastrados");
+        }
+
 
         [HttpPost]
         public IActionResult cadastroClientePost(Cliente cliente)
@@ -100,17 +117,20 @@ namespace Bike.Controllers
         {
             return View("AtendentesCadastrados");
         }
-        
-        [HttpPost]
-        public IActionResult BicicletaManutecao()
-        {
-            return View("bikes-em-munutencao"); 
-        }
+        /*
+         * ------------------FIM CLIENTE----------------------------
+         */
 
+        /*
+         * INICIO ATENDDENTE
+         */
         [HttpPost]
         public IActionResult CadastroAtendente(Atendente atendente)
         {
             return View("cadastroFuncionario");
         }
+        /*
+         * -----------------FIM ATENDENTE----------------------
+         */
     }
 }
