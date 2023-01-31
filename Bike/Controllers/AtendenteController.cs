@@ -89,13 +89,10 @@ namespace Bike.Controllers
         [HttpPost]
         public IActionResult cadastroClientePost(Cliente cliente)
         {
-           
             var result = 0;
-           
             var query = $"INSERT INTO endereco (Id_endereco, Numero, Rua, bairro, Cidade, cep) VALUES ({cliente.IdEndereco}, '{cliente.Numero}', '{cliente.Rua}', '{cliente.Bairro}', '{cliente.Cidade}', '{cliente.Cep}');"
                       + $"INSERT INTO telefone (Id_tel, DDD, Telefone) VALUES ( {cliente.IdTelefone}, {cliente.Ddd}, {cliente.Telefone});"
                       + $"INSERT INTO cliente (Id_cliente, Cpf, Nome, Sobrenome, Id_endereco,Id_tel,Email) VALUES ({cliente.IdCliente}, '{cliente.Cpf}', '{cliente.Nome}', '{cliente.Sobrenome}', {cliente.IdEndereco}, {cliente.IdTelefone}, '{cliente.Email}');";
-
 
             if (cliente.Nome != null)
             {
@@ -120,13 +117,29 @@ namespace Bike.Controllers
         /*
          * ------------------FIM CLIENTE----------------------------
          */
-
+        
         /*
          * INICIO ATENDDENTE
          */
         [HttpPost]
-        public IActionResult CadastroAtendente(Atendente atendente)
+        public  IActionResult CadastroAtendente(Atendente atendente)
         {
+            var query = $"INSERT INTO endereco (Id_endereco, Numero, Rua, bairro, Cidade, cep) VALUES ({atendente.IdEndereco}, '{atendente.Numero}', '{atendente.Rua}', '{atendente.Bairro}', '{atendente.Cidade}', '{atendente.Cep}');"
+                        + $"INSERT INTO telefone (Id_tel, DDD, Telefone) VALUES ( {atendente.IdTelefone}, {atendente.Ddd}, {atendente.Telefone});"
+                        + $"INSERT INTO atendente (Id_atendente, Cpf, Nome, Sobrenome, Id_endereco, Id_tel) VALUES ({atendente.IdAtendente},'{atendente.Cpf}', '{atendente.Nome}', '{atendente.SobreNome}', {atendente.IdEndereco}, {atendente.IdTelefone});";
+
+            if (atendente.Nome != null)
+            {
+                using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        var result = command.ExecuteNonQuery();
+                    }
+                }
+
+            }
             return View("cadastroFuncionario");
         }
         /*
