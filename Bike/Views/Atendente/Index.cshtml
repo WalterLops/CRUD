@@ -102,9 +102,12 @@
         <div class="col">
             <div class="imgDashBoard">
                 <a href="#">
-                    <form asp-action="cadastroBicicletaPost">
+                    <form asp-action="cadastroBicicletaPost" class="btnAtendente">
                         <button asp-action="cadastroBicicletaPost">
-                            <img src="images\DashBoard\db6.png" alt="">
+                            <img src="images\DashBoard\db5.png" alt="">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                            </div>
                         </button>
                     </form>
                 </a>

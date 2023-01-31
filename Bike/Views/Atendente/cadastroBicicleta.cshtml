@@ -1,54 +1,53 @@
 @model BikeVale.Models.Bicicleta;
-@using BikeVale.Models;
-@using MySqlConnector;
 @{
     ViewData["Title"] = "CadastroBicicleta";
     Random random = new Random();
     var idBicicleta = random.Next(1, 10000);
     var ale = Model.result;
 }
-<div class="padding"></div>
+
 <div class="container">
-    <div class="row title-h1">
-        <h2>Cadastar Bike</h2>
-    </div>
-    <div class="row font-midle">
-        <h2>Informações básicas</h2>
-    </div>
+    <h1>Cadastar Bicicleta</h1>
     <div class=" row">
-        <form asp-action="cadastroBicicletaPost" id="formulario">
-            <div class="input-group mb-3 col">
-                <span class="input-group-text" id="basic-addon1">#</span>
-                <input asp-for="Modelo" class="form-control" placeholder="Nome Bike" />
-                <span asp-validation-for="Modelo" class="text-danger"></span>
+        <form asp-action="cadastroBicicletaPost" class="col">
+            <div class="mb-3">
+                <label class="form-label" type="text" for="Modelo">Nome da Bicicleta:</label>
+                <input class="form-control" type="text" id="Modelo" name="Modelo">
             </div>
-            <div class="input-group mb-3 col">
-                <span class="input-group-text" id="basic-addon1">#</span>
-                <input asp-for="Modalidade" class="form-control" placeholder="Modalidade" />
-                <span asp-validation-for="Modalidade" class="text-danger"></span>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="Modalidade">Modalidade:</label>
+                <input class="form-control" type="text" id="Modalidade" name="Modalidade">
             </div>
-            <div class="input-group mb-3 col">
-                <span class="input-group-text" id="basic-addon1">#</span>
-                <input asp-for="QtdMarchas" class="form-control" placeholder="Marchas" />
-                <span asp-validation-for="QtdMarchas" class="text-danger"></span>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="QtdMarchas">Marchas:</label>
+                <input class="form-control" type="text" id="QtdMarchas" name="QtdMarchas">
             </div>
-            <div class="input-group mb-3 col">
-                <span class="input-group-text" id="basic-addon1">#</span>
-                <input asp-for="IdBicicleta" value=@idBicicleta class="form-control" />
-                <span asp-validation-for="IdBicicleta" class="text-danger"></span>
+
+            <div class="mb-3 text-end">
+                <input type="submit" value="Salvar" onclick="alerta()" class="btn btn-green btn-decorator" />
             </div>
-            <div class="col text-end">
-                <input onclick="alerta()" type="submit" value="Salvar" class="btn btn-green btn-decorator"/>
+
+            <div class="mb-3 invisivel">
+                <label class="form-label" type="text" for="StatusEmprestimo">Status Emprestimo:</label>
+                <input class="form-control" type="text" id="StatusEmprestimo" name="StatusEmprestimo">
             </div>
+
+            <div class="mb-3 invisivel">
+                <label class="form-label" type="text" for="IdBicicleta">ID Bicicleta:</label>
+                <input class="form-control"  type="text" id="IdBicicleta" value=@idBicicleta name="IdBicicleta">
+            </div>
+
         </form>
     </div>
 </div>
 
 <script>
-    function alerta(){
-        alert("Dados salvos com sucesso!");
+    function alerta() {
+        alert("Bicicleta cadastrada com sucesso!");
     }
-    
+
     function limparFormulario() {
         document.getElementById("formulario").reset();
     }
