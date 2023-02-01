@@ -205,9 +205,21 @@ namespace Bike.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteBicicleta(Bicicleta Bicicleta)
+        public IActionResult DeleteBicicleta(Bicicleta bicicleta)
         {
-            // Implementar delete
+            var query = $"DELETE FROM `bancotp`.`bicicleta` WHERE(`Id_bicicleta` = {bicicleta.IdBicicleta});";
+
+            if (bicicleta.IdBicicleta != null)
+            {
+                using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        var result = command.ExecuteNonQuery();
+                    }
+                }
+            }
             return View("bikes-disponiveis-alugadas");
         }
 

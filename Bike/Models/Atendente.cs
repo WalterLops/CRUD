@@ -34,5 +34,22 @@ namespace BikeVale.Models
             IdEndereco = idEndereco;
             IdTelefone = idTelefone;
         }
+
+        public Atendente(int idAtendente, string cpf, string nome, string sobreNome, string rua, int numero, string bairro, string cidade, string cep, int telefone, int idEndereco, int idTelefone, int ddd)
+        {
+            IdAtendente = idAtendente;
+            Cpf = cpf;
+            Nome = nome;
+            SobreNome = sobreNome;
+            Rua = rua;
+            Numero = numero;
+            Bairro = bairro;
+            Cidade = cidade;
+            Cep = cep;
+            Telefone = telefone;
+            IdEndereco = idEndereco;
+            IdTelefone = idTelefone;
+            Ddd = ddd;
+        }
     }
 }
