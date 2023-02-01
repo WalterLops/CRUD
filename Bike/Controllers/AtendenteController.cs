@@ -111,16 +111,17 @@ namespace Bike.Controllers
             return View("cadastroCliente");
         }
 
-        
         [HttpPost]
-        public IActionResult AtendentesCadastrados()
+        public IActionResult DeleteCliente(Cliente cliente)
         {
-            return View("AtendentesCadastrados");
+            // Implementar delete
+            return View("ClientesCadastrados");
         }
+
         /*
          * ------------------FIM CLIENTE----------------------------
          */
-
+        
         /*
          * INICIO ATENDDENTE
          */
@@ -128,6 +129,19 @@ namespace Bike.Controllers
         public IActionResult CadastroAtendente(Atendente atendente)
         {
             return View("cadastroFuncionario");
+        }
+
+        [HttpPost]
+        public IActionResult AtendentesCadastrados()
+        {
+            return View("AtendentesCadastrados");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAtendente(Atendente atendente)
+        {
+            // Implementar delete
+            return View("AtendentesCadastrados");
         }
         /*
          * -----------------FIM ATENDENTE----------------------

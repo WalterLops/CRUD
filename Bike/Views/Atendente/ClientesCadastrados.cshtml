@@ -66,37 +66,45 @@
                      aria-labelledby="heading_@cliente.IdCliente"
                      data-bs-parent="#accordionHistoricoDetalhes">
                         <div class="accordion-body">
-                            <div class="row">
+                            <form asp-action="DeleteCliente" id="@cliente.IdCliente">
                                 <div class="row">
-                                    <div class="input-group mb-3 col">
-                                        <p>Nome: @cliente.Nome @cliente.Sobrenome</p>
+                                    <div class="row">
+                                        <div class="input-group mb-3 col">
+                                            <p>Nome: @cliente.Nome @cliente.Sobrenome</p>
+                                        </div>
+                                        <div class="input-group mb-3 col">
+                                            <p>CPF: @cliente.Cpf</p>
+                                        </div>
                                     </div>
-                                    <div class="input-group mb-3 col">
-                                        <p>CPF: @cliente.Cpf</p>
+                                    <div class="row">
+                                        <div class="input-group mb-3 col">
+                                            <p>E-mail: @cliente.Email</p>
+                                        </div>
+                                        <div class="input-group mb-3 col">
+                                            <p>Endereço: @cliente.Rua, @cliente.Numero</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-group mb-3 col">
+                                            <p>Cidade: @cliente.Cidade </p>
+                                        </div>
+                                        <div class="input-group mb-3 col">
+                                            <p>CEP: @cliente.Cep</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>Numero celular: @cliente.Telefone</p>
+                                        </div>
+                                        <div class="col text-end">
+                                            <button class="btn btn-danger" name="IdCliente" value="@cliente.IdCliente">Excluir</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="input-group mb-3 col">
-                                        <p>E-mail: @cliente.Email</p>
-                                    </div>
-                                    <div class="input-group mb-3 col">
-                                        <p>Endereço: @cliente.Rua, @cliente.Numero</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-group mb-3 col">
-                                        <p>Cidade: @cliente.Cidade </p>
-                                    </div>
-                                    <div class="input-group mb-3 col">
-                                        <p>CEP: @cliente.Cep</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <p>Numero celular: @cliente.Telefone</p>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
+
                 </div>
             
     }

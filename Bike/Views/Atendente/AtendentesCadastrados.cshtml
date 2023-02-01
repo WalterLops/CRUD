@@ -1,50 +1,102 @@
+@model BikeVale.Models.Atendente;
+@{
+@using BikeVale.Models;
+@using MySqlConnector;
+
+    ViewData["Title"] = "AtendentesCadastrados";
+    var idAtendente = 0;
+    var nome = "";
+    var sobrenome = "";
+    var cpf = "";
+    var email = "";
+    var idEndereco = 0;
+    var idTelefone = 0;
+    var cidade = "0";
+    var cep = "";
+    var telefone = 0;
+
+    List <Atendente>listaAtendente = new List<Atendente>();
+
+    using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+    {
+        connection.Open();
+        using (MySqlCommand command = new MySqlCommand($"SELECT atendente.Id_atendente, atendente.Nome, atendente.Sobrenome, atendente.Cpf, atendente.Id_endereco, atendente.Id_tel from atendente", connection))
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                idAtendente = Convert.ToInt32(reader["Id_atendente"]);
+                nome = (reader["Nome"]).ToString();
+                sobrenome = (reader["Sobrenome"]).ToString();
+                cpf = (reader["Cpf"]).ToString();
+                idEndereco = Convert.ToInt32(reader["Id_endereco"]);
+                idTelefone = Convert.ToInt32(reader["Id_tel"]);
+                
+                var c1 = new Atendente(idAtendente, cpf, nome, sobrenome, idEndereco, idTelefone);
+                listaAtendente.Add(c1);
+            }
+        }
+    }
+}
+
+
 <div class="container">
     <div class="title-h1">
         <h1>Atendentes Cadastrados</h1>
     </div>
     <div class="accordion" id="accordionHistoricoDetalhes">
+        @{    foreach (Atendente atendente in listaAtendente)
+    {
         <div class="accordion-item">
-            <h2 class="accordion-header" id="headingstaticBackdrop--alterar-bike--id--02">
+            <h2 class="accordion-header" id="heading_@atendente.IdAtendente">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Ane da Silva | (38)9999999
+                    data-bs-target="#@atendente.IdAtendente" aria-expanded="false" aria-controls="@atendente.IdAtendente">
+                    @atendente.Nome @atendente.SobreNome | NumeroCel
                 </button>
             </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse"
-                aria-labelledby="headingstaticBackdrop--alterar-bike--id--02"
+            <div id="@atendente.IdAtendente" class="accordion-collapse collapse"
+                aria-labelledby="heading_@atendente.IdAtendente"
                 data-bs-parent="#accordionHistoricoDetalhes">
                 <div class="accordion-body">
-                    <div class="row">
+                    <from asp-action="DeleteAtendente" id="@atendente.IdAtendente">
                         <div class="row">
-                            <div class="input-group mb-3 col">
-                                <p>Nome:</p>
+                            <div class="row">
+                                <div class="input-group mb-3 col">
+                                    <p>Nome:@atendente.Nome</p>
+                                </div>
+                                <div class="input-group mb-3 col">
+                                    <p>CPF: @atendente.Cpf</p>
+                                </div>
                             </div>
-                            <div class="input-group mb-3 col">
-                                <p>CPF:</p>
+                            <div class="row">
+                                <div class="input-group mb-3 col">
+                                    <p>Endereço: </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-group mb-3 col">
+                                    <p>Cidade: </p>
+                                </div>
+                                <div class="input-group mb-3 col">
+                                    <p>CEP: </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                                <p>Numero celular: </p>
+                                            </div>
+                                            <div class="col text-end">
+                                                <button class="btn btn-danger" name="IdAtendente" value="@atendente.IdAtendente">Excluir</button>
+                                            </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="input-group mb-3 col">
-                                <p>E-mail:</p>
-                            </div>
-                            <div class="input-group mb-3 col">
-                                <p>Endereço:</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-group mb-3 col">
-                                <p>Cidade:</p>
-                            </div>
-                            <div class="input-group mb-3 col">
-                                <p>CEP:</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <p>Numero celular:</p>
-                        </div>
-                    </div>
+                    </from>
                 </div>
             </div>
         </div>
+
+    }
+        }
     </div>
 </div>
+<div class="padding"></div>
