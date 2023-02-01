@@ -1,8 +1,7 @@
 @model BikeVale.Models.Atendente;
 @{
-@using BikeVale.Models;
-@using MySqlConnector;
-
+    @using BikeVale.Models;
+    @using MySqlConnector;
     ViewData["Title"] = "AtendentesCadastrados";
     var idAtendente = 0;
     var nome = "";
@@ -15,8 +14,7 @@
     var cep = "";
     var telefone = 0;
 
-    List <Atendente>listaAtendente = new List<Atendente>();
-
+    List<Atendente>listaAtendente = new List<Atendente>();
     using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
     {
         connection.Open();
@@ -31,71 +29,90 @@
                 cpf = (reader["Cpf"]).ToString();
                 idEndereco = Convert.ToInt32(reader["Id_endereco"]);
                 idTelefone = Convert.ToInt32(reader["Id_tel"]);
-                
                 Atendente atendente = new Atendente(idAtendente, cpf, nome, sobrenome, idEndereco, idTelefone);
                 listaAtendente.Add(atendente);
             }
         }
     }
 }
-
-
 <div class="container">
     <div class="title-h1">
         <h1>Atendentes Cadastrados</h1>
     </div>
     <div class="accordion" id="accordionHistoricoDetalhes">
-        @{    foreach (Atendente atendente in listaAtendente)
-    {
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading_@atendente.IdAtendente">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#@atendente.IdAtendente" aria-expanded="false" aria-controls="@atendente.IdAtendente">
-                    @atendente.Nome @atendente.SobreNome | NumeroCel
-                </button>
-            </h2>
-            <div id="@atendente.IdAtendente" class="accordion-collapse collapse"
-                aria-labelledby="heading_@atendente.IdAtendente"
-                data-bs-parent="#accordionHistoricoDetalhes">
-                <div class="accordion-body">
-                    <from asp-action="DeleteAtendente" id="@atendente.IdAtendente">
-                        <div class="row">
-                            <div class="row">
-                                <div class="input-group mb-3 col">
-                                    <p>Nome:@atendente.Nome</p>
-                                </div>
-                                <div class="input-group mb-3 col">
-                                    <p>CPF: @atendente.Cpf</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-group mb-3 col">
-                                    <p>Endereço: </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-group mb-3 col">
-                                    <p>Cidade: </p>
-                                </div>
-                                <div class="input-group mb-3 col">
-                                    <p>CEP: </p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                                <p>Numero celular: </p>
+        @{
+            foreach (Atendente atendente in listaAtendente)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading_@atendente.IdAtendente">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#@atendente.IdAtendente" aria-expanded="false" aria-controls="@atendente.IdAtendente">
+                            @atendente.Nome @atendente.SobreNome | NumeroCel
+                        </button>
+                    </h2>
+                    <div id="@atendente.IdAtendente" class="accordion-collapse collapse"
+                     aria-labelledby="heading_@atendente.IdAtendente"
+                     data-bs-parent="#accordionHistoricoDetalhes">
+                        <div class="accordion-body">
+                            <from asp-action="DeleteAtendente" id="@atendente.IdAtendente">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="input-group mb-3 col">
+                                            <p>Nome:@atendente.Nome</p>
+                                        </div>
+                                        <div class="input-group mb-3 col">
+                                            <p>CPF: @atendente.Cpf</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-group mb-3 col">
+                                            <p>Endereço: </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-group mb-3 col">
+                                            <p>Cidade: </p>
+                                        </div>
+                                        <div class="input-group mb-3 col">
+                                            <p>CEP: </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>Numero celular: </p>
+                                        </div>
+                                        <form asp-action="DeleteAtendente" class="col">
+                                            <div class="mb-3 invisivel">
+                                                <label class="form-label" type="text" for="IdEndereco">IdTelefone</label>
+                                                <input class="form-control" type="text" id="IdEndereco" value="@atendente.IdEndereco" name="IdEndereco">
                                             </div>
-                                            <div class="col text-end">
-                                                <button class="btn btn-danger" name="IdAtendente" value="@atendente.IdAtendente">Excluir</button>
+                                            <div class="mb-3">
+                                                <button class="btn btn-danger" onclick="alerta()" name="IdAtendente" value="@atendente.IdAtendente">Excluir</button>
                                             </div>
-                            </div>
+                                            <div class="mb-3 invisivel">
+                                                <label class="form-label" type="text" for="IdTelefone">IdTelefone:</label>
+                                                <input class="form-control" type="text" id="IdTelefone" value="@atendente.IdTelefone" name="IdTelefone">
+                                            </div>
+                                        </form>
+                                        
+                                    </div>
+                                </div>
+                            </from>
                         </div>
-                    </from>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-    }
+                <script>
+                   function alerta() {
+                        alert("Atendente @atendente.Nome @atendente.SobreNome, apagad0 com sucesso!");
+                   }
+               
+                   function limparFormulario() {
+                       document.getElementById("formulario").reset();
+                   }
+               
+               </script>
+            }
         }
     </div>
 </div>

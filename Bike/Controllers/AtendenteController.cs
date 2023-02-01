@@ -164,7 +164,21 @@ namespace Bike.Controllers
         [HttpPost]
         public IActionResult DeleteAtendente(Atendente atendente)
         {
-            // Implementar delete
+            var query = $"DELETE FROM `bancotp`.`atendente` WHERE(`Id_atendente` = {atendente.IdAtendente});"
+                      + $"DELETE FROM `bancotp`.`telefone` WHERE(`Id_tel` = {atendente.IdTelefone});"
+                      + $"DELETE FROM `bancotp`.`endereco` WHERE(`Id_endereco` = {atendente.IdEndereco});";
+
+            if (atendente.IdAtendente != null)
+            {
+                using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        var result = command.ExecuteNonQuery();
+                    }
+                }
+            }
             return View("AtendentesCadastrados");
         }
 
