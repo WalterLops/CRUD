@@ -175,6 +175,19 @@ namespace Bike.Controllers
             return View("bikes-disponiveis-alugadas");
         }
 
+        [HttpPost]
+        public IActionResult AlugarBicicleta(Bicicleta Bicicleta)
+        {
+            // Implementar delete
+            return View("bikes-disponiveis-alugadas");
+        }
+
+        [HttpPost]
+        public IActionResult ManutecaoBicicleta(Bicicleta Bicicleta)
+        {
+            // Implementar delete
+            return View("bikes-em-munutencao");
+        }
 
         /*
          * -----------------FIM ATENDENTE----------------------
