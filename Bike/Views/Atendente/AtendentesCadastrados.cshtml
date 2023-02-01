@@ -32,8 +32,8 @@
                 idEndereco = Convert.ToInt32(reader["Id_endereco"]);
                 idTelefone = Convert.ToInt32(reader["Id_tel"]);
                 
-                var c1 = new Atendente(idAtendente, cpf, nome, sobrenome, idEndereco, idTelefone);
-                listaAtendente.Add(c1);
+                Atendente atendente = new Atendente(idAtendente, cpf, nome, sobrenome, idEndereco, idTelefone);
+                listaAtendente.Add(atendente);
             }
         }
     }
