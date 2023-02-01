@@ -66,7 +66,7 @@
             </div>
 
             <div class="mb-3 text-end">
-                <input type="submit" value="Salvar" class="btn btn-green btn-decorator" />
+                <input type="submit" value="Salvar" onclick="alerta()" class="btn btn-green btn-decorator" />
             </div>
 
             <div class="mb-3 invisivel">
@@ -81,4 +81,17 @@
         </form>
         <div class="col"></div>
     </div>
+
+    <script>
+        function alerta() {
+            alert("Cliente cadastrado com Sucesso!");
+        }
+
+        function limparFormulario() {
+            document.getElementById("formulario").reset();
+        }
+
+    </script>
 </div>
+
+                

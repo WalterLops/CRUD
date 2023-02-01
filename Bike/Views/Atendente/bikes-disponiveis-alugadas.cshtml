@@ -3,12 +3,6 @@
 @using MySqlConnector;
 @{
     ViewData["Title"] = "ClientesCadastrados";
-    var Id_bicicleta = 0;
-    var Modelo = "";
-    var Modalidade = "";
-    var Qtd_marchas = 0;
-    var Status_emprestimo = 0;
-
 
     List<Bicicleta> Listabicicleta = new List<Bicicleta>();
 
@@ -20,13 +14,10 @@
         {
             while (reader.Read())
             {
-                Id_bicicleta = Convert.ToInt32(reader["Id_bicicleta"]);
-                Modelo = (reader["Modelo"]).ToString();
-                Modalidade = (reader["Modalidade"]).ToString();
-                Qtd_marchas = Convert.ToInt32(reader["Qtd_marchas"]);
-                Status_emprestimo = Convert.ToInt32(reader["Status_emprestimo"]);
 
-                Bicicleta c1 = new Bicicleta(Id_bicicleta, Modelo, Modalidade, Qtd_marchas, Status_emprestimo);
+                Bicicleta c1 = new Bicicleta(Convert.ToInt32(reader["Id_bicicleta"]), (reader["Modelo"]).ToString(), 
+                                (reader["Modalidade"]).ToString(), Convert.ToInt32(reader["Qtd_marchas"]), 
+                                Convert.ToInt32(reader["Status_emprestimo"]));
                 Listabicicleta.Add(c1);
             }
         }
@@ -62,12 +53,10 @@
                 </div>
             </div>
             <div class="info-bike col">
-                <h3>Specialized Fuse</h3>
+                <h3>@bicicleta.Modelo</h3>
                 <div class="info-ln">
-                    <div><span>Medida:</span></div>
-                    <div><span>Estilo: </span></div>
-                    <div><span>Marchas:</span></div>
-                    <div><span> A partir de:</span></div>
+                    <div><span>Modalidade: @bicicleta.Modalidade</span></div>
+                    <div><span>Marchas: @bicicleta.QtdMarchas</span></div>
                 </div>
             </div>
             <div class="col">
@@ -100,7 +89,7 @@
                     
                     <div class="col">
                         <form  asp-action="DeleteBicicleta" id="Deletar_@bicicleta.IdBicicleta">
-                           <button asp-action="DeleteBicicleta"type="submit" class="btn btn-danger" name="IdBicicleta" value="@bicicleta.IdBicicleta">Excluir</button>
+                            <button asp-action="DeleteBicicleta" type="submit" class="btn btn-danger" onclick="alerta()" name="IdBicicleta" value="@bicicleta.IdBicicleta">Excluir</button>
                         </form>
                     </div>
                 </div>                  
@@ -140,6 +129,17 @@
             
         </div>
     }
-    }
+      <script>
+          function alerta() {
+              alert("Bicicleta Excluida com Sucesso!");
+          }
+
+          function limparFormulario() {
+              document.getElementById("formulario").reset();
+          }
+
+      </script>
+
+        }
     </div>
 </div>

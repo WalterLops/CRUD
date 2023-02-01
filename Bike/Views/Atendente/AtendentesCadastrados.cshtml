@@ -3,33 +3,24 @@
     @using BikeVale.Models;
     @using MySqlConnector;
     ViewData["Title"] = "AtendentesCadastrados";
-    var idAtendente = 0;
-    var nome = "";
-    var sobrenome = "";
-    var cpf = "";
-    var email = "";
-    var idEndereco = 0;
-    var idTelefone = 0;
-    var cidade = "0";
-    var cep = "";
-    var telefone = 0;
 
     List<Atendente>listaAtendente = new List<Atendente>();
     using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
     {
+        var query = $"SELECT * from atendente "
+                   + "join telefone on atendente.Id_tel = telefone.Id_tel "
+                   + "join endereco on atendente.Id_endereco = endereco.Id_endereco;";
         connection.Open();
-        using (MySqlCommand command = new MySqlCommand($"SELECT atendente.Id_atendente, atendente.Nome, atendente.Sobrenome, atendente.Cpf, atendente.Id_endereco, atendente.Id_tel from atendente", connection))
+        using (MySqlCommand command = new MySqlCommand(query, connection))
         using (MySqlDataReader reader = command.ExecuteReader())
         {
             while (reader.Read())
             {
-                idAtendente = Convert.ToInt32(reader["Id_atendente"]);
-                nome = (reader["Nome"]).ToString();
-                sobrenome = (reader["Sobrenome"]).ToString();
-                cpf = (reader["Cpf"]).ToString();
-                idEndereco = Convert.ToInt32(reader["Id_endereco"]);
-                idTelefone = Convert.ToInt32(reader["Id_tel"]);
-                Atendente atendente = new Atendente(idAtendente, cpf, nome, sobrenome, idEndereco, idTelefone);
+                Atendente atendente = new Atendente(Convert.ToInt32(reader["Id_atendente"]), (reader["Cpf"]).ToString(), 
+                        (reader["Nome"]).ToString(), (reader["Sobrenome"]).ToString(), (reader["rua"]).ToString(), 
+                        Convert.ToInt32(reader["Numero"]), (reader["Bairro"]).ToString(), (reader["Cidade"]).ToString(), 
+                        (reader["Cep"]).ToString(), Convert.ToInt32(reader["Telefone"]), Convert.ToInt32(reader["Id_endereco"]), 
+                        Convert.ToInt32(reader["Id_tel"]), Convert.ToInt32(reader["DDD"]));
                 listaAtendente.Add(atendente);
             }
         }
@@ -47,7 +38,7 @@
                     <h2 class="accordion-header" id="heading_@atendente.IdAtendente">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#@atendente.IdAtendente" aria-expanded="false" aria-controls="@atendente.IdAtendente">
-                            @atendente.Nome @atendente.SobreNome | NumeroCel
+                            @atendente.Nome @atendente.SobreNome | (@atendente.Ddd) @atendente.Telefone
                         </button>
                     </h2>
                     <div id="@atendente.IdAtendente" class="accordion-collapse collapse"
@@ -58,7 +49,7 @@
                                 <div class="row">
                                     <div class="row">
                                         <div class="input-group mb-3 col">
-                                            <p>Nome:@atendente.Nome</p>
+                                            <p>Nome: @atendente.Nome @atendente.SobreNome</p>
                                         </div>
                                         <div class="input-group mb-3 col">
                                             <p>CPF: @atendente.Cpf</p>
@@ -66,20 +57,20 @@
                                     </div>
                                     <div class="row">
                                         <div class="input-group mb-3 col">
-                                            <p>Endereço: </p>
+                                            <p>Endereço: @atendente.Rua, @atendente.Numero, @atendente.Bairro </p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="input-group mb-3 col">
-                                            <p>Cidade: </p>
+                                            <p>Cidade: @atendente.Bairro </p>
                                         </div>
                                         <div class="input-group mb-3 col">
-                                            <p>CEP: </p>
+                                            <p>CEP: @atendente.Cep</p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <p>Numero celular: </p>
+                                            <p>Numero celular: @atendente.Telefone </p>
                                         </div>
                                         <form asp-action="DeleteAtendente" class="col">
                                             <div class="mb-3 invisivel">
