@@ -74,6 +74,31 @@ namespace Bike.Controllers
         {
             return View("bikes-em-munutencao"); 
         }
+        [HttpPost]
+        public IActionResult DeleteBicicleta(Bicicleta bicicleta)
+        {
+            var query = $"DELETE FROM `bancotp`.`bicicleta` WHERE(`Id_bicicleta` = {bicicleta.IdBicicleta});";
+
+            if (bicicleta.IdBicicleta != null)
+            {
+                using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        var result = command.ExecuteNonQuery();
+                    }
+                }
+            }
+            return View("bikes-disponiveis-alugadas");
+        }
+
+        [HttpPost]
+        public IActionResult AtualizarBicicleta(Bicicleta Bicicleta)
+        {
+            // Implementar delete
+            return View("bikes-disponiveis-alugadas");
+        }
 
         /*
          * ----------------FIM BICICLETA------------------------
@@ -116,8 +141,28 @@ namespace Bike.Controllers
         [HttpPost]
         public IActionResult AtualizarCliente(Cliente cliente)
         {
-            // 
-            return View("ClientesCadastrados");
+            return View("AtualizarCliente");
+        }
+        [HttpPost]
+        public IActionResult AtualizarClientePost(Cliente cliente)
+        {
+            var result = 0;
+            var query = $"UPDATE `bancotp`.`endereco` SET `Numero` = '{cliente.Numero}', `Rua` = '{cliente.Rua}', `Cidade` = '{cliente.Rua}', `cep` = '{cliente.Cep}', `Bairro` = '{cliente.Bairro}'  WHERE (`Id_endereco` = '{cliente.IdEndereco}');"
+                      + $" UPDATE `bancotp`.`telefone` SET `DDD` = '{cliente.Ddd}', `Telefone` = '{cliente.Telefone}' WHERE (`Id_tel` = '{cliente.IdTelefone}');"
+                      + $" UPDATE `bancotp`.`cliente` SET  `Cpf` = '{cliente.Cpf}', `Nome` = '{cliente.Nome}', `Sobrenome` = '{cliente.Sobrenome}', `Email` = '{cliente.Email}' WHERE (`Id_cliente` = '{cliente.IdCliente}');";
+
+            if (cliente.Nome != null)
+            {
+                using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        result = command.ExecuteNonQuery();
+                    }
+                }
+            }
+            return View("AtualizarCliente");
         }
 
 
@@ -172,16 +217,38 @@ namespace Bike.Controllers
         }
 
         [HttpPost]
-        public IActionResult AtendentesCadastrados()
+        public IActionResult AtendentesCadastrados(Cliente cliente)
         {
             return View("AtendentesCadastrados");
         }
 
         [HttpPost]
-        public IActionResult AtualizarAtendente()
+        public IActionResult AtualizarAtendente(Atendente atendente)
         {
-            return View("AtendentesCadastrados");
+            return View("AtualizarFuncionario");
         }
+
+        [HttpPost]
+        public IActionResult AtualizarAtendentePost(Atendente atendente)
+        {
+            var query = $"UPDATE `bancotp`.`endereco` SET `Numero` = '{atendente.Numero}', `Rua` = '{atendente.Rua}', `Cidade` = '{atendente.Rua}', `cep` = '{atendente.Cep}', `Bairro` = '{atendente.Bairro}'  WHERE (`Id_endereco` = '{atendente.IdEndereco}');"
+                     + $" UPDATE `bancotp`.`telefone` SET `DDD` = '{atendente.Ddd}', `Telefone` = '{atendente.Telefone}' WHERE (`Id_tel` = '{atendente.IdTelefone}');"
+                     + $" UPDATE `bancotp`.`atendente` SET  `Cpf` = '{atendente.Cpf}', `Nome` = '{atendente.Nome}', `Sobrenome` = '{atendente.SobreNome}' WHERE (`Id_atendente` = '{atendente.IdAtendente}');";
+
+            if (atendente.Nome != null)
+            {
+                using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        var result = command.ExecuteNonQuery();
+                    }
+                }
+            }
+            return View("AtualizarFuncionario");
+        }
+
 
         [HttpPost]
         public IActionResult DeleteAtendente(Atendente atendente)
@@ -202,32 +269,6 @@ namespace Bike.Controllers
                 }
             }
             return View("AtendentesCadastrados");
-        }
-
-        [HttpPost]
-        public IActionResult DeleteBicicleta(Bicicleta bicicleta)
-        {
-            var query = $"DELETE FROM `bancotp`.`bicicleta` WHERE(`Id_bicicleta` = {bicicleta.IdBicicleta});";
-
-            if (bicicleta.IdBicicleta != null)
-            {
-                using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
-                {
-                    connection.Open();
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
-                    {
-                        var result = command.ExecuteNonQuery();
-                    }
-                }
-            }
-            return View("bikes-disponiveis-alugadas");
-        }
-
-        [HttpPost]
-        public IActionResult AtualizarBicicleta(Bicicleta Bicicleta)
-        {
-            // Implementar delete
-            return View("bikes-disponiveis-alugadas");
         }
 
         [HttpPost]

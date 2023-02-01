@@ -3,23 +3,8 @@
 @using MySqlConnector;
 @{
     ViewData["Title"] = "ClientesCadastrados";
-    var idCliente = 0;
-    var nome = "";
-    var sobrenome = "";
-    var cpf = "";
-    var email = "";
-    var rua = "";
-    var numero = 0;
-    var cidade = "0";
-    var cep = "";
-    var telefone = 0;
-    var idTelefone = 0;
-    var idEndereco = 0;
-    List
-    <Cliente>
-    listacliente = new List
-    <Cliente>
-    ();
+
+    List<Cliente> listacliente = new List<Cliente>();
     using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
     {
         connection.Open();
@@ -31,19 +16,10 @@
         {
             while (reader.Read())
             {
-                idCliente = Convert.ToInt32(reader["Id_cliente"]);
-                nome = (reader["Nome"]).ToString();
-                sobrenome = (reader["Sobrenome"]).ToString();
-                cpf = (reader["Cpf"]).ToString();
-                email = (reader["Email"]).ToString();
-                rua = (reader["Rua"]).ToString();
-                numero = Convert.ToInt32(reader["Numero"]);
-                cidade = (reader["Cidade"]).ToString();
-                cep = (reader["cep"]).ToString();
-                telefone = Convert.ToInt32(reader["Telefone"]);
-                idTelefone = Convert.ToInt32(reader["Id_tel"]);
-                idEndereco = Convert.ToInt32(reader["Id_endereco"]);
-                Cliente c1 = new Cliente(idCliente, nome, sobrenome, cpf, email, rua, numero, cidade, cep, telefone, idTelefone, idEndereco);
+                Cliente c1 = new Cliente(Convert.ToInt32(reader["Id_cliente"]), (reader["Nome"]).ToString(), (reader["Sobrenome"]).ToString(),
+                                       (reader["Cpf"]).ToString(), (reader["Email"]).ToString(), (reader["Rua"]).ToString(),
+                                       Convert.ToInt32(reader["Numero"]), (reader["Cidade"]).ToString(), (reader["cep"]).ToString(),
+                                       Convert.ToInt32(reader["Telefone"]), Convert.ToInt32(reader["Id_tel"]), Convert.ToInt32(reader["Id_endereco"]));
                 listacliente.Add(c1);
             }
         }

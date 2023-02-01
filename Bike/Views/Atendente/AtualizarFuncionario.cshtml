@@ -1,89 +1,106 @@
 @model BikeVale.Models.Atendente
+@using MySqlConnector;
 @{
     ViewData["Title"] = "Funcionario";
-    Random random = new Random();
-    var idFuncionario = random.Next(1, 10000);
-    var idEndereco = random.Next(10000, 66666);
-    var idTelefone = random.Next(66667, 99999);
+    
+    List<Atendente> listaAtendente = new List<Atendente>();
+    var query = "SELECT * FROM atendente "
+              + "join telefone on atendente.Id_tel = telefone.Id_tel "
+              + "join endereco on atendente.Id_endereco = endereco.Id_endereco;";
+    using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+    {
+        connection.Open();
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                Atendente c1 = new Atendente(Convert.ToInt32(reader["Id_atendente"]), (reader["Nome"]).ToString(), (reader["SobreNome"]).ToString(),
+                                       (reader["Cpf"]).ToString(), (reader["Rua"]).ToString(),
+                                       Convert.ToInt32(reader["Numero"]), (reader["Cidade"]).ToString(), (reader["cep"]).ToString(),
+                                       Convert.ToInt32(reader["Telefone"]), Convert.ToInt32(reader["Id_tel"]), Convert.ToInt32(reader["Id_endereco"]), Convert.ToInt32(reader["DDD"]), (reader["Bairro"]).ToString());
+                listaAtendente.Add(c1);
+            }
+        }
+    }
+
 }
 
 
 <div class="container">
-  <h1>Informações Pessoais</h1>
   <div class="row">
-        <form asp-action="AtualizarAtendente" class="col">
-            <div class="mb-3">
-                <label class="form-label" type="text" for="nome">Nome:</label>
-                <input class="form-control" type="text" id="nome" name="nome">
-            </div>
+        @{
+            foreach (Atendente atendente in listaAtendente)
+            {
+                <h1>Atualizar Cadastro Funcionário</h1>
+                <div class="row">
+                    <form asp-action="AtualizarAtendentePost" class="col">
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="nome">Nome:</label>
+                            <input class="form-control" type="text" id="nome" value=@atendente.Nome name="nome">
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="sobrenome">Sobrenome:</label>
-                <input class="form-control" type="text" id="sobrenome" name="sobrenome">
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="sobrenome">Sobrenome:</label>
+                            <input class="form-control" type="text" id="sobrenome" value=@atendente.SobreNome name="sobrenome">
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="cpf">CPF:</label>
-                <input class="form-control" type="text" id="cpf" name="cpf">
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="cpf">CPF:</label>
+                            <input class="form-control" type="text" id="cpf" value=@atendente.Cpf name="cpf">
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="email">E-mail:</label>
-                <input class="form-control" type="email" id="email" name="email">
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="rua">Rua:</label>
+                            <input class="form-control" type="text" id="rua" value=@atendente.Rua name="rua">
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="rua">Rua:</label>
-                <input class="form-control" type="text" id="rua" name="rua">
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="numero">Número:</label>
+                            <input class="form-control" type="text" id="numero" value=@atendente.Numero name="numero">
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="numero">Número:</label>
-                <input class="form-control" type="text" id="numero" name="numero">
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="cidade">Bairro:</label>
+                            <input class="form-control" type="text" id="bairro" value=@atendente.Bairro name="bairro">
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="cidade">Cidade:</label>
-                <input class="form-control" type="text" id="cidade" name="cidade">
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="cidade">Cidade:</label>
+                            <input class="form-control" type="text" id="cidade" value=@atendente.Cidade name="cidade">
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="cidade">Bairro:</label>
-                <input class="form-control" type="text" id="bairro" name="bairro">
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="cep">CEP:</label>
+                            <input class="form-control" ype="text" id="cep" value=@atendente.Cep name="cep">
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="cep">CEP:</label>
-                <input class="form-control" ype="text" id="cep" name="cep">
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="Ddd">DDD:</label>
+                            <input class="form-control" type="text" id="Ddd" value=@atendente.Ddd name="Ddd">
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="Ddd">DDD:</label>
-                <input class="form-control" type="text" id="Ddd" name="Ddd">
-            </div>
+                        <div class="mb-3">
+                            <label class="form-label" type="text" for="telefone">Telefone:</label>
+                            <input class="form-control" type="text" id="telefone" value=@atendente.Telefone name="telefone">
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary" name="IdAtendente" value="@atendente.IdAtendente">Salvar</button>
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label" type="text" for="telefone">Telefone:</label>
-                <input class="form-control" type="text" id="telefone" name="Telefone">
-            </div>
+                        <div class="mb-3 invisivel">
+                            <label class="form-label" type="text" for="idEndereco">ID do Endereço:</label>
+                            <input type="text" id="idEndereco" value=@atendente.IdEndereco name="idEndereco">
+                        </div>
 
-            <div class="mb-3 text-end">
-                <input type="submit" value="Salvar" class="btn btn-green btn-decorator" />
-            </div>
-
-            <div class="mb-3 invisivel">
-                <label class="form-label" type="text" for="idCliente">ID do Cliente:</label>
-                <input class="form-control" type="text" id="idCliente" value=@idFuncionario name="idAtendente">
-            </div>
-            <div class="mb-3 invisivel">
-                <label class="form-label" type="text" for="idEndereco">ID do Endereço:</label>
-                <input type="text" id="idEndereco" value=@idEndereco name="idEndereco">
-            </div>
-            <div class="mb-3 invisivel">
-                <label class="form-label" type="text" for="idTelefone">ID do Telefone:</label>
-                <input type="text" onclick="alerta()" id="idTelefone" value=@idTelefone name="idTelefone">
-            </div>
-        </form>
+                        <div class="mb-3 invisivel">
+                            <label class="form-label" type="text" for="idTelefone">ID do Telefone:</label>
+                            <input type="text" id="idTelefone" value=@atendente.IdTelefone name="idTelefone">
+                        </div>
+                    </form>
+                </div>
+            }
+        }
     <div class="col"></div>
   </div>
 
