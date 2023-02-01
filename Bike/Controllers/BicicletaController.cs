@@ -142,5 +142,7 @@ namespace Bike.Controllers
         {
             return _context.Bicicletas.Any(e => e.IdBicicleta == id);
         }
+
+        
     }
 }

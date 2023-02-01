@@ -153,6 +153,15 @@ namespace Bike.Controllers
             // Implementar delete
             return View("AtendentesCadastrados");
         }
+
+        [HttpPost]
+        public IActionResult DeleteBicicleta(Bicicleta Bicicleta)
+        {
+            // Implementar delete
+            return View("bikes-disponiveis-alugadas");
+        }
+
+
         /*
          * -----------------FIM ATENDENTE----------------------
          */
