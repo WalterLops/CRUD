@@ -19,8 +19,8 @@ namespace BikeVale.Models
         public string Cidade { get; set; }
         public string Cep { get; set; }
         public int Telefone { get; set; }
-        public string IdEndereco { get; set; }
-        public string IdTelefone { get; set; }
+        public int IdEndereco { get; set; }
+        public int IdTelefone { get; set; }
         public int Ddd { get; set; }
         public int Tel { get; set; }
 
@@ -42,6 +42,23 @@ namespace BikeVale.Models
             Cep = cep;
             Telefone = telefone;
         }
+
+        public Cliente(int idCliente, string nome, string sobrenome, string cpf, string email, string rua, int numero, string cidade, string cep, int telefone, int idEndereco, int idTelefone)
+        {
+            IdCliente = idCliente;
+            Nome = nome;
+            Sobrenome = sobrenome;
+            Cpf = cpf;
+            Email = email;
+            Rua = rua;
+            Numero = numero;
+            Cidade = cidade;
+            Cep = cep;
+            Telefone = telefone;
+            IdEndereco = idEndereco;
+            IdTelefone = idTelefone;
+        }
+
     }
 
 }

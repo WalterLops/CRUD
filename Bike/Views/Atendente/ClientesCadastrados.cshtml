@@ -1,4 +1,4 @@
-@model BikeVale.Models.Bicicleta;
+@model BikeVale.Models.Cliente
 @using BikeVale.Models;
 @using MySqlConnector;
 @{
@@ -13,14 +13,18 @@
     var cidade = "0";
     var cep = "";
     var telefone = 0;
-
-    List <Cliente>listacliente = new List<Cliente>();
-
+    var idTelefone = 0;
+    var idEndereco = 0;
+    List
+    <Cliente>
+    listacliente = new List
+    <Cliente>
+    ();
     using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
     {
         connection.Open();
         using (MySqlCommand command = new MySqlCommand($"SELECT cliente.Id_cliente, cliente.Nome, cliente.Sobrenome, cliente.Cpf, cliente.Email, endereco.Rua, endereco.Numero, endereco.Cidade," +
-        "endereco.cep, telefone.Telefone from cliente" +
+        "endereco.cep, telefone.Telefone,telefone.Id_tel, endereco.Id_endereco  from cliente" +
         " join endereco on cliente.Id_endereco = endereco.Id_endereco" +
         " join telefone on telefone.Id_tel = cliente.Id_tel;", connection))
         using (MySqlDataReader reader = command.ExecuteReader())
@@ -37,31 +41,31 @@
                 cidade = (reader["Cidade"]).ToString();
                 cep = (reader["cep"]).ToString();
                 telefone = Convert.ToInt32(reader["Telefone"]);
-                Cliente c1 = new Cliente(idCliente, nome, sobrenome, cpf, email, rua, numero, cidade, cep, telefone);
+                idTelefone = Convert.ToInt32(reader["Id_tel"]);
+                idEndereco = Convert.ToInt32(reader["Id_endereco"]);
+                Cliente c1 = new Cliente(idCliente, nome, sobrenome, cpf, email, rua, numero, cidade, cep, telefone, idTelefone, idEndereco);
                 listacliente.Add(c1);
             }
         }
     }
 }
-
-    <div class="container">
-        <div class="title-h1">
-            <h1>Clientes Cadastrados</h1>
-        </div>
+<div class="container">
+    <div class="title-h1">
+        <h1>Clientes Cadastrados</h1>
     </div>
-
-     <div class="container">
-            <div class="accordion" id="accordionHistoricoDetalhes">
-@{    foreach (Cliente cliente in listacliente)
-    {
-                
+</div>
+<div class="container">
+    <div class="accordion" id="accordionHistoricoDetalhes">
+        @{
+            foreach (Cliente cliente in listacliente)
+            {
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="heading_@cliente.IdCliente">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#@cliente.IdCliente" aria-expanded="false" aria-controls="@cliente.IdCliente">
                             @cliente.Nome @cliente.Sobrenome | @cliente.Telefone
                         </button>
-                    </h2> 
+                    </h2>
                     <div id="@cliente.IdCliente" class="accordion-collapse collapse"
                      aria-labelledby="heading_@cliente.IdCliente"
                      data-bs-parent="#accordionHistoricoDetalhes">
@@ -96,21 +100,36 @@
                                         <div class="col">
                                             <p>Numero celular: @cliente.Telefone</p>
                                         </div>
-                                        <div class="col text-end">
-                                            <button class="btn btn-danger" name="IdCliente" value="@cliente.IdCliente">Excluir</button>
-                                        </div>
+                                        <form asp-action="DeleteCliente" class="col">
+                                            <div class="mb-3 invisivel">
+                                                <label class="form-label" type="text" for="IdEndereco">IdTelefone</label>
+                                                <input class="form-control" type="text" id="IdEndereco" value="@cliente.IdEndereco" name="IdEndereco">
+                                            </div>
+                                            <div class="mb-3">
+                                                <button class="btn btn-danger" onclick="alerta()" name="IdCliente" value="@cliente.IdCliente">Excluir</button>
+                                            </div>
+                                            <div class="mb-3 invisivel">
+                                                <label class="form-label" type="text" for="IdTelefone">IdTelefone:</label>
+                                                <input class="form-control" type="text" id="IdTelefone" value="@cliente.IdTelefone" name="IdTelefone">
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
-
                 </div>
-            
-    }
-}
+               <script>
+                   function alerta() {
+                       alert("Cliente @cliente.Nome @cliente.Sobrenome, apagada com sucesso!");
+                   }
+               
+                   function limparFormulario() {
+                       document.getElementById("formulario").reset();
+                   }
+               
+               </script>
+            }
+        }
     </div>
-        </div>
-        <div class="padding"></div>
-
-
+</div>
