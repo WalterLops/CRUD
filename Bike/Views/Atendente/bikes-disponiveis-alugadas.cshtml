@@ -33,9 +33,6 @@
     }
 }
 
-
-
-
 <div class="container">
     <h1 class="title-h1">Bikes disponiveis e Alugadas</h1>
     <div class="container">
@@ -92,10 +89,9 @@
                 
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalManutencao01">Dar manutenção</button>
                         
-                <from  asp-action="DeleteBicicleta" id="@bicicleta.IdBicicleta">
-
-                   <button asp-action="DeleteBicicleta"type="submit" class="btn btn-danger" name="IdBicicleta" value="@bicicleta.IdBicicleta">Excluir</button>          
-                </from>                     
+                <form asp-action="DeleteBicicleta" id="@bicicleta.IdBicicleta">
+                   <button asp-action="DeleteBicicleta" type="submit" class="btn btn-danger" name="IdBicicleta" value="@bicicleta.IdBicicleta">Excluir</button>          
+                </form>                     
                                 
                 <!-- Modal Manutenção-->
                 <div class="modal fade" id="modalManutencao01" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -133,7 +129,5 @@
         </div>
     }
     }
-
-        <div class="padding"></div>
     </div>
 </div>
