@@ -2,7 +2,7 @@
 @using BikeVale.Models;
 @using MySqlConnector;
 @{
-    ViewData["Title"] = "ClientesCadastrados";
+    ViewData["Title"] = "Todas as Bikes";
     var Id_bicicleta = 0;
     var Modelo = "";
     var Modalidade = "";
@@ -131,6 +131,7 @@
                                     <div class="row padding"><button asp-action="ManutecaoBicicleta"type="submit" class="btn btn-green" name="IdBicicleta" value="@bicicleta.IdBicicleta">Criar manutenção</button></div>
                                                
                                </form>
+                               
                                         
                             </div>
                         </div>

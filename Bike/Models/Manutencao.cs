@@ -9,5 +9,13 @@ namespace BikeVale.Models
         public string Descricao { get; set; }
         public double Preco { get; set; }
         public string DataManuencao { get; set; }
+
+        public Manutencao(int idManutencao, string descricao, double preco, string dataManuencao)
+        {
+            IdManutencao = idManutencao;
+            Descricao = descricao;
+            Preco = preco;
+            DataManuencao = dataManuencao;
+        }
     }
 }
