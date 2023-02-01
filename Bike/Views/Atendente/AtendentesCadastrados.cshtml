@@ -45,7 +45,7 @@
                      aria-labelledby="heading_@atendente.IdAtendente"
                      data-bs-parent="#accordionHistoricoDetalhes">
                         <div class="accordion-body">
-                            <from asp-action="DeleteAtendente" id="@atendente.IdAtendente">
+                            
                                 <div class="row">
                                     <div class="row">
                                         <div class="input-group mb-3 col">
@@ -80,15 +80,21 @@
                                             <div class="mb-3">
                                                 <button class="btn btn-danger" onclick="alerta()" name="IdAtendente" value="@atendente.IdAtendente">Excluir</button>
                                             </div>
+                                            </form>
+                                            <form asp-action="AtualizarAtendente">
+                                                    <div class="mb-3">
+                                                        <button class="btn btn-primary" name="IdAtendente" value="@atendente.IdAtendente">Editar</button>
+                                                    </div>
+                                                </form>
                                             <div class="mb-3 invisivel">
                                                 <label class="form-label" type="text" for="IdTelefone">IdTelefone:</label>
                                                 <input class="form-control" type="text" id="IdTelefone" value="@atendente.IdTelefone" name="IdTelefone">
                                             </div>
-                                        </form>
+                                        
                                         
                                     </div>
                                 </div>
-                            </from>
+                            
                         </div>
                     </div>
                 </div>

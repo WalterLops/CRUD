@@ -1,0 +1,103 @@
+@model BikeVale.Models.Atendente
+@{
+    ViewData["Title"] = "Funcionario";
+    Random random = new Random();
+    var idFuncionario = random.Next(1, 10000);
+    var idEndereco = random.Next(10000, 66666);
+    var idTelefone = random.Next(66667, 99999);
+}
+
+
+<div class="container">
+  <h1>Informações Pessoais</h1>
+  <div class="row">
+        <form asp-action="AtualizarAtendente" class="col">
+            <div class="mb-3">
+                <label class="form-label" type="text" for="nome">Nome:</label>
+                <input class="form-control" type="text" id="nome" name="nome">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="sobrenome">Sobrenome:</label>
+                <input class="form-control" type="text" id="sobrenome" name="sobrenome">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="cpf">CPF:</label>
+                <input class="form-control" type="text" id="cpf" name="cpf">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="email">E-mail:</label>
+                <input class="form-control" type="email" id="email" name="email">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="rua">Rua:</label>
+                <input class="form-control" type="text" id="rua" name="rua">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="numero">Número:</label>
+                <input class="form-control" type="text" id="numero" name="numero">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="cidade">Cidade:</label>
+                <input class="form-control" type="text" id="cidade" name="cidade">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="cidade">Bairro:</label>
+                <input class="form-control" type="text" id="bairro" name="bairro">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="cep">CEP:</label>
+                <input class="form-control" ype="text" id="cep" name="cep">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="Ddd">DDD:</label>
+                <input class="form-control" type="text" id="Ddd" name="Ddd">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" type="text" for="telefone">Telefone:</label>
+                <input class="form-control" type="text" id="telefone" name="Telefone">
+            </div>
+
+            <div class="mb-3 text-end">
+                <input type="submit" value="Salvar" class="btn btn-green btn-decorator" />
+            </div>
+
+            <div class="mb-3 invisivel">
+                <label class="form-label" type="text" for="idCliente">ID do Cliente:</label>
+                <input class="form-control" type="text" id="idCliente" value=@idFuncionario name="idAtendente">
+            </div>
+            <div class="mb-3 invisivel">
+                <label class="form-label" type="text" for="idEndereco">ID do Endereço:</label>
+                <input type="text" id="idEndereco" value=@idEndereco name="idEndereco">
+            </div>
+            <div class="mb-3 invisivel">
+                <label class="form-label" type="text" for="idTelefone">ID do Telefone:</label>
+                <input type="text" onclick="alerta()" id="idTelefone" value=@idTelefone name="idTelefone">
+            </div>
+        </form>
+    <div class="col"></div>
+  </div>
+
+    <script>
+        function alerta() {
+            alert("Atendente cadastrado com sucesso!");
+        }
+
+        function limparFormulario() {
+            document.getElementById("formulario").reset();
+        }
+
+    </script>
+
+</div>
+
+

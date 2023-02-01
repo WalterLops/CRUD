@@ -1,23 +1,62 @@
+@model BikeVale.Models.Bicicleta;
+@using MySqlConnector;
+
+@{
+    ViewData["Title"] = "Bikes em manutenção";
+    var Id_bicicleta = 0;
+    var Modelo = "";
+    var Modalidade = "";
+    var Qtd_marchas = 0;
+    var Status_emprestimo = 0;
+
+
+    List<Bicicleta> Listabicicleta = new List<Bicicleta>();
+
+    using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+    {
+        connection.Open();
+        using (MySqlCommand command = new MySqlCommand($"SELECT bicicleta.Id_bicicleta, bicicleta.Modelo, bicicleta.Modalidade, bicicleta.Qtd_marchas, bicicleta.Status_emprestimo  FROM bancotp.bicicleta;", connection))
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                Id_bicicleta = Convert.ToInt32(reader["Id_bicicleta"]);
+                Modelo = (reader["Modelo"]).ToString();
+                Modalidade = (reader["Modalidade"]).ToString();
+                Qtd_marchas = Convert.ToInt32(reader["Qtd_marchas"]);
+                Status_emprestimo = Convert.ToInt32(reader["Status_emprestimo"]);
+
+                Bicicleta c1 = new Bicicleta(Id_bicicleta, Modelo, Modalidade, Qtd_marchas, Status_emprestimo);
+                Listabicicleta.Add(c1);
+            }
+        }
+    }
+}
+
+
 <div class="container">
     <h1 class="title-h1">Bikes disponiveis e Alugadas</h1>
     <div class="container">
-        <div class="row border">
+        @{    foreach (Bicicleta bicicleta in Listabicicleta)
+    {  
+        <div class="row">
             <div class="col">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    <img src="../img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop_@bicicleta.IdBicicleta">
+                    <img src="/images/img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S">
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                <div class="modal fade" id="staticBackdrop_@bicicleta.IdBicicleta" data-bs-backdrop="static" data-bs-keyboard="false"
                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                    aria-label="Close">
+                                </button>
                             </div>
                             <div class="modal-body">
-                                <img src="../img/SPECIALIZED-FUSE-S.jpg " alt="SPECIALIZED-FUSE-S" class="imgModal">
+                                <img src="/images/img/SPECIALIZED-FUSE-S.jpg " alt="SPECIALIZED-FUSE-S" class="imgModal">
                             </div>
                         </div>
                     </div>
@@ -53,16 +92,16 @@
                 <h3>Descrição da manutenção</h3>
                 <span>Valor: R$ 189,99</span>
                 <h4>Descrição:</h4>
-                <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem nemo reprehenderit
-                    soluta maxime ea omnis, debitis sequi ratione id veritatis odio optio distinctio eos magni modi
-                    hic quaerat recusandae consectetur!</p>
-                <button type="button" class="btn btn-green"><a href="detalhes-reserva.html"
-                        class="nav-link text-white">Concluir manutenção</a></button>
+                <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dolores, maiores molestias dolorem pariatur, voluptas quisquam repudiandae illum ab culpa saepe! Nihil temporibus, placeat rem tenetur obcaecati deserunt nam laudantium.</p> <!--Model.Descricao-->
+                <form asp-action="ConcluirManutencao" id="@bicicleta.IdBicicleta"> <!--Manutence_Model.GetHashCode()-->
+                    <button class="btn btn-green" asp-action="ConcluirManutencao" >Concluir manutenção</button> <!--name="Model.IdManutencao" value="Model.IdManutencao"-->
+                </form>
             </div>
 
             <div class="padding"></div>
         </div>
-
+    }
+    }
 
     </div>
 </div>

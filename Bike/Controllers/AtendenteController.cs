@@ -68,6 +68,13 @@ namespace Bike.Controllers
             }
             return View("cadastroBicicleta", bike);
         }
+
+        [HttpPost]
+        public IActionResult ConcluirManutencao()
+        {
+            return View("bikes-em-munutencao"); 
+        }
+
         /*
          * ----------------FIM BICICLETA------------------------
          */
@@ -104,6 +111,15 @@ namespace Bike.Controllers
             }
             return View("cadastroCliente");
         }
+
+
+        [HttpPost]
+        public IActionResult AtualizarCliente(Cliente cliente)
+        {
+            // 
+            return View("ClientesCadastrados");
+        }
+
 
         [HttpPost]
         public IActionResult DeleteCliente(Cliente cliente)
@@ -162,6 +178,12 @@ namespace Bike.Controllers
         }
 
         [HttpPost]
+        public IActionResult AtualizarAtendente()
+        {
+            return View("AtendentesCadastrados");
+        }
+
+        [HttpPost]
         public IActionResult DeleteAtendente(Atendente atendente)
         {
             var query = $"DELETE FROM `bancotp`.`atendente` WHERE(`Id_atendente` = {atendente.IdAtendente});"
@@ -202,16 +224,23 @@ namespace Bike.Controllers
         }
 
         [HttpPost]
-        public IActionResult AlugarBicicleta(Bicicleta bicicleta)
+        public IActionResult AtualizarBicicleta(Bicicleta Bicicleta)
         {
             // Implementar delete
             return View("bikes-disponiveis-alugadas");
         }
 
         [HttpPost]
-        public IActionResult ManutecaoBicicleta(Bicicleta bicicleta)
+        public IActionResult AlugarBicicleta(Bicicleta Bicicleta)
         {
-            // Implementar delete
+            // 
+            return View("bikes-disponiveis-alugadas");
+        }
+
+        [HttpPost]
+        public IActionResult ManutecaoBicicleta(Bicicleta Bicicleta)
+        {
+            // 
             return View("bikes-em-munutencao");
         }
 

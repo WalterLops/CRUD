@@ -113,6 +113,11 @@
                                                 <input class="form-control" type="text" id="IdTelefone" value="@cliente.IdTelefone" name="IdTelefone">
                                             </div>
                                         </form>
+                                        <form asp-action="AtualizarCliente">
+                                            <div class="mb-3">
+                                            <button class="btn btn-primary" name="IdCliente" value="@cliente.IdCliente">Editar</button>
+                                         </div>
+                                         </form>
                                     </div>
                                 </div>
                             </form>
