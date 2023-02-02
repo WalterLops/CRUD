@@ -288,6 +288,14 @@ namespace Bike.Controllers
             return View("bikes-em-munutencao");
         }
 
+        [HttpPost]
+        public IActionResult DevolverBicicleta(Bicicleta Bicicleta)
+        {
+            // 
+            return View("bikes-em-munutencao");
+        }
+
+
         /*
          * -----------------FIM ATENDENTE----------------------
          */
