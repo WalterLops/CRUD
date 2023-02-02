@@ -10,6 +10,8 @@ using BikeVale.Data;
 using BikeVale.Models;
 using MySqlConnector;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Bike.Controllers
 {
@@ -42,80 +44,46 @@ namespace Bike.Controllers
         }
 
         [HttpPost]
-        public IActionResult Detalhes(Aluga aluga)
+        public IActionResult AlugarBicicleta(Aluga aluga)
         {
-            //Bicicleta  bicicleta = new Bicicleta(bike.IdBicicleta);
-            //return View("Reserva");
-            return View("detalhes-reserva", aluga);
-        }
-
-        // GET: Alugar1Controller/Details/5
-        /*public ActionResult Details(int id)
-        {
-            return View("Reserva");
-        }*/
-
-        // GET: Alugar1Controller/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Alugar1Controller/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            var id = AlugarController.DecobreId(aluga.Cpf);
+            if (aluga.IdBicicleta != null)
             {
-                return RedirectToAction(nameof(Index));
+
+                var query = $"call sp_atualizastatusbike({aluga.IdBicicleta}); " +
+                           $"INSERT INTO `bancotp`.`aluga` (`Id_bicicleta`, `Id_cliente`) VALUES ({aluga.IdBicicleta}, {id});";
+                using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        var result = command.ExecuteNonQuery();
+                    }
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            return View("bikes-disponiveis-alugadas");
         }
 
-        // GET: Alugar1Controller/Edit/5
-        public ActionResult Edit(int id)
+        public static int DecobreId(string cpf)
         {
-            return View();
-        }
-
-        // POST: Alugar1Controller/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            var id = 0; 
+            using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
             {
-                return RedirectToAction(nameof(Index));
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand($"SELECT cliente.Id_cliente from cliente where cliente.Cpf = '{cpf}';", connection))
+                {
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            id = Convert.ToInt32(reader["Id_cliente"]);
+                        }
+                    }
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return id;
         }
-
-        // GET: Alugar1Controller/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Alugar1Controller/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+     
     }
 }

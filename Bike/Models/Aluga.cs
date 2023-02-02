@@ -5,7 +5,7 @@ using KeyAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
 namespace BikeVale.Models
 {
-    public class Aluga 
+    public class Aluga
     {
         public int IdBicicleta { get; set; }
         public int IdHistorico { get; set; }
@@ -13,7 +13,7 @@ namespace BikeVale.Models
         public int IdAtendente { get; set; }
         public string Datainicio { get; set; }
         public string DataFim { get; set; }
-
+        public string Cpf { get; set; }
         public Aluga()
         {
         }
