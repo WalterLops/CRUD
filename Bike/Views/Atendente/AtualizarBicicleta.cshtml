@@ -3,43 +3,42 @@
     ViewData["Title"] = "CadastroBicicleta";
     Random random = new Random();
     var idBicicleta = random.Next(1, 10000);
-    var ale = Model.result;
+    //var ale = Model.result;
 }
 
 <div class="container">
-    <h1>Cadastar Bicicleta</h1>
-    <div class=" row">
-        <form asp-action="AtualizarBicicleta" class="col">
-            <div class="mb-3">
-                <label class="form-label" type="text" for="Modelo">Nome da Bicicleta:</label>
-                <input class="form-control" type="text" id="Modelo" name="Modelo">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" type="text" for="Modalidade">Modalidade:</label>
-                <input class="form-control" type="text" id="Modalidade" name="Modalidade">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label" type="text" for="QtdMarchas">Marchas:</label>
-                <input class="form-control" type="text" id="QtdMarchas" name="QtdMarchas">
-            </div>
-
-            <div class="mb-3 text-end">
-                <input type="submit" value="Salvar" onclick="alerta()" class="btn btn-green btn-decorator" />
-            </div>
-
-            <div class="mb-3 invisivel">
-                <label class="form-label" type="text" for="StatusEmprestimo">Status Emprestimo:</label>
-                <input class="form-control" type="text" id="StatusEmprestimo" name="StatusEmprestimo">
-            </div>
-
-            <div class="mb-3 invisivel">
-                <label class="form-label" type="text" for="IdBicicleta">ID Bicicleta:</label>
-                <input class="form-control"  type="text" id="IdBicicleta" value=@idBicicleta name="IdBicicleta">
-            </div>
-
-        </form>
+    <div class="row">
+        <h1>Atualizar Bicicleta</h1>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form asp-action="AtualizarBicicleta" class="col">
+                <div class="mb-3">
+                    <label class="form-label" type="text" for="Modelo">Nome da Bicicleta:</label>
+                    <input class="form-control" type="text" id="Modelo" name="Modelo">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" type="text" for="Modalidade">Modalidade:</label>
+                    <input class="form-control" type="text" id="Modalidade" name="Modalidade">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" type="text" for="QtdMarchas">Marchas:</label>
+                    <input class="form-control" type="text" id="QtdMarchas" name="QtdMarchas">
+                </div>
+                <div class="mb-3 text-end">
+                    <input type="submit" value="Salvar" onclick="alerta()" class="btn btn-green btn-decorator" />
+                </div>
+                <div class="mb-3 invisivel">
+                    <label class="form-label" type="text" for="StatusEmprestimo">Status Emprestimo:</label>
+                    <input class="form-control" type="text" id="StatusEmprestimo" name="StatusEmprestimo">
+                </div>
+                <div class="mb-3 invisivel">
+                    <label class="form-label" type="text" for="IdBicicleta">ID Bicicleta:</label>
+                    <input class="form-control"  type="text" id="IdBicicleta" value=@idBicicleta name="IdBicicleta">
+                </div>
+            </form>
+        </div>
+        <div class="col"></div>
     </div>
 </div>
 

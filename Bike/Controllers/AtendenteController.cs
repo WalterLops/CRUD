@@ -226,8 +226,8 @@ namespace Bike.Controllers
         [HttpPost]
         public IActionResult AtualizarBicicleta(Bicicleta Bicicleta)
         {
-            // Implementar delete
-            return View("bikes-disponiveis-alugadas");
+        
+            return View("AtualizarBicicleta");
         }
 
         [HttpPost]
