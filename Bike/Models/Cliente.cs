@@ -43,6 +43,23 @@ namespace BikeVale.Models
             Telefone = telefone;
         }
 
+        public Cliente(int idCliente, string nome, string sobrenome, string cpf, string email, string rua, int numero, string cidade, string cep, int telefone, int idEndereco, int idTelefone, int ddd)
+        {
+            IdCliente = idCliente;
+            Nome = nome;
+            Sobrenome = sobrenome;
+            Cpf = cpf;
+            Email = email;
+            Rua = rua;
+            Numero = numero;
+            Cidade = cidade;
+            Cep = cep;
+            Telefone = telefone;
+            IdEndereco = idEndereco;
+            IdTelefone = idTelefone;
+            Ddd = ddd;
+        }
+
         public Cliente(int idCliente, string nome, string sobrenome, string cpf, string email, string rua, int numero, string cidade, string cep, int telefone, int idEndereco, int idTelefone)
         {
             IdCliente = idCliente;

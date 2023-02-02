@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Savage.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BikeVale.Models
@@ -50,6 +51,23 @@ namespace BikeVale.Models
             IdEndereco = idEndereco;
             IdTelefone = idTelefone;
             Ddd = ddd;
+        }
+
+        public Atendente(int idCliente, string nome, string sobrenome, string cpf,  string rua, int numero, string cidade, string cep, int telefone, int idEndereco, int idTelefone, int ddd, string bairro)
+        {
+            IdAtendente = idCliente;
+            Nome = nome;
+            SobreNome = sobrenome;
+            Cpf = cpf;
+            Rua = rua;
+            Numero = numero;
+            Cidade = cidade;
+            Cep = cep;
+            Telefone = telefone;
+            IdEndereco = idEndereco;
+            IdTelefone = idTelefone;
+            Ddd = ddd;
+            Bairro = bairro;
         }
     }
 }
