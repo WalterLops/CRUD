@@ -128,9 +128,9 @@ namespace Bike.Controllers
         public IActionResult cadastroClientePost(Cliente cliente)
         {
             var result = 0;
-            var query = $"INSERT INTO endereco (Id_endereco, Numero, Rua, bairro, Cidade, cep) VALUES ({cliente.IdEndereco}, '{cliente.Numero}', '{cliente.Rua}', '{cliente.Bairro}', '{cliente.Cidade}', '{cliente.Cep}');"
+            var query = $"START TRANSACTION;"+$"INSERT INTO endereco (Id_endereco, Numero, Rua, bairro, Cidade, cep) VALUES ({cliente.IdEndereco}, '{cliente.Numero}', '{cliente.Rua}', '{cliente.Bairro}', '{cliente.Cidade}', '{cliente.Cep}');"
                       + $"INSERT INTO telefone (Id_tel, DDD, Telefone) VALUES ( {cliente.IdTelefone}, {cliente.Ddd}, {cliente.Telefone});"
-                      + $"INSERT INTO cliente (Id_cliente, Cpf, Nome, Sobrenome, Id_endereco,Id_tel,Email) VALUES ({cliente.IdCliente}, '{cliente.Cpf}', '{cliente.Nome}', '{cliente.Sobrenome}', {cliente.IdEndereco}, {cliente.IdTelefone}, '{cliente.Email}');";
+                      + $"INSERT INTO cliente (Id_cliente, Cpf, Nome, Sobrenome, Id_endereco,Id_tel,Email) VALUES ({cliente.IdCliente}, '{cliente.Cpf}', '{cliente.Nome}', '{cliente.Sobrenome}', {cliente.IdEndereco}, {cliente.IdTelefone}, '{cliente.Email}');"+"COMMIT;";
 
             if (cliente.Nome != null)
             {
@@ -156,9 +156,9 @@ namespace Bike.Controllers
         public IActionResult AtualizarClientePost(Cliente cliente)
         {
             var result = 0;
-            var query = $"UPDATE `bancotp`.`endereco` SET `Numero` = '{cliente.Numero}', `Rua` = '{cliente.Rua}', `Cidade` = '{cliente.Rua}', `cep` = '{cliente.Cep}', `Bairro` = '{cliente.Bairro}'  WHERE (`Id_endereco` = '{cliente.IdEndereco}');"
+            var query = $"START TRANSACTION;"+$"UPDATE `bancotp`.`endereco` SET `Numero` = '{cliente.Numero}', `Rua` = '{cliente.Rua}', `Cidade` = '{cliente.Rua}', `cep` = '{cliente.Cep}', `Bairro` = '{cliente.Bairro}'  WHERE (`Id_endereco` = '{cliente.IdEndereco}');"
                       + $" UPDATE `bancotp`.`telefone` SET `DDD` = '{cliente.Ddd}', `Telefone` = '{cliente.Telefone}' WHERE (`Id_tel` = '{cliente.IdTelefone}');"
-                      + $" UPDATE `bancotp`.`cliente` SET  `Cpf` = '{cliente.Cpf}', `Nome` = '{cliente.Nome}', `Sobrenome` = '{cliente.Sobrenome}', `Email` = '{cliente.Email}' WHERE (`Id_cliente` = '{cliente.IdCliente}');";
+                      + $" UPDATE `bancotp`.`cliente` SET  `Cpf` = '{cliente.Cpf}', `Nome` = '{cliente.Nome}', `Sobrenome` = '{cliente.Sobrenome}', `Email` = '{cliente.Email}' WHERE (`Id_cliente` = '{cliente.IdCliente}');"+"COMMIT;";
 
             if (cliente.Nome != null)
             {
@@ -178,9 +178,9 @@ namespace Bike.Controllers
         [HttpPost]
         public IActionResult DeleteCliente(Cliente cliente)
         {
-            var query = $"DELETE FROM `bancotp`.`cliente` WHERE(`Id_cliente` = {cliente.IdCliente});"
+            var query = $"START TRANSACTION;"+ $"DELETE FROM `bancotp`.`cliente` WHERE(`Id_cliente` = {cliente.IdCliente});"
                       + $"DELETE FROM `bancotp`.`telefone` WHERE(`Id_tel` = {cliente.IdTelefone});"
-                      + $"DELETE FROM `bancotp`.`endereco` WHERE(`Id_endereco` = {cliente.IdEndereco});";
+                      + $"DELETE FROM `bancotp`.`endereco` WHERE(`Id_endereco` = {cliente.IdEndereco})" +"COMMIT;";
 
             if (cliente.IdCliente != null)
             {
@@ -206,9 +206,11 @@ namespace Bike.Controllers
         [HttpPost]
         public  IActionResult CadastroAtendente(Atendente atendente)
         {
-            var query = $"INSERT INTO endereco (Id_endereco, Numero, Rua, bairro, Cidade, cep) VALUES ({atendente.IdEndereco}, '{atendente.Numero}', '{atendente.Rua}', '{atendente.Bairro}', '{atendente.Cidade}', '{atendente.Cep}');"
+            var query = $"START TRANSACTION;"+
+            $"INSERT INTO endereco (Id_endereco, Numero, Rua, bairro, Cidade, cep) VALUES ({atendente.IdEndereco}, '{atendente.Numero}', '{atendente.Rua}', '{atendente.Bairro}', '{atendente.Cidade}', '{atendente.Cep}');"
                         + $"INSERT INTO telefone (Id_tel, DDD, Telefone) VALUES ( {atendente.IdTelefone}, {atendente.Ddd}, {atendente.Telefone});"
-                        + $"INSERT INTO atendente (Id_atendente, Cpf, Nome, Sobrenome, Id_endereco, Id_tel) VALUES ({atendente.IdAtendente},'{atendente.Cpf}', '{atendente.Nome}', '{atendente.SobreNome}', {atendente.IdEndereco}, {atendente.IdTelefone});";
+                        + $"INSERT INTO atendente (Id_atendente, Cpf, Nome, Sobrenome, Id_endereco, Id_tel) VALUES ({atendente.IdAtendente},'{atendente.Cpf}', '{atendente.Nome}', '{atendente.SobreNome}', {atendente.IdEndereco}, {atendente.IdTelefone});"
+                        +"COMMIT;";
 
             if (atendente.Nome != null)
             {
@@ -240,9 +242,10 @@ namespace Bike.Controllers
         [HttpPost]
         public IActionResult AtualizarAtendentePost(Atendente atendente)
         {
-            var query = $"UPDATE `bancotp`.`endereco` SET `Numero` = '{atendente.Numero}', `Rua` = '{atendente.Rua}', `Cidade` = '{atendente.Rua}', `cep` = '{atendente.Cep}', `Bairro` = '{atendente.Bairro}'  WHERE (`Id_endereco` = '{atendente.IdEndereco}');"
+            var query = $"START TRANSACTION;"+
+            $"UPDATE `bancotp`.`endereco` SET `Numero` = '{atendente.Numero}', `Rua` = '{atendente.Rua}', `Cidade` = '{atendente.Rua}', `cep` = '{atendente.Cep}', `Bairro` = '{atendente.Bairro}'  WHERE (`Id_endereco` = '{atendente.IdEndereco}');"
                      + $" UPDATE `bancotp`.`telefone` SET `DDD` = '{atendente.Ddd}', `Telefone` = '{atendente.Telefone}' WHERE (`Id_tel` = '{atendente.IdTelefone}');"
-                     + $" UPDATE `bancotp`.`atendente` SET  `Cpf` = '{atendente.Cpf}', `Nome` = '{atendente.Nome}', `Sobrenome` = '{atendente.SobreNome}' WHERE (`Id_atendente` = '{atendente.IdAtendente}');";
+                     + $" UPDATE `bancotp`.`atendente` SET  `Cpf` = '{atendente.Cpf}', `Nome` = '{atendente.Nome}', `Sobrenome` = '{atendente.SobreNome}' WHERE (`Id_atendente` = '{atendente.IdAtendente}');" +"COMMIT;";
 
             if (atendente.Nome != null)
             {
@@ -262,9 +265,9 @@ namespace Bike.Controllers
         [HttpPost]
         public IActionResult DeleteAtendente(Atendente atendente)
         {
-            var query = $"DELETE FROM `bancotp`.`atendente` WHERE(`Id_atendente` = {atendente.IdAtendente});"
+            var query = $"START TRANSACTION;"+ $"DELETE FROM `bancotp`.`atendente` WHERE(`Id_atendente` = {atendente.IdAtendente});"
                       + $"DELETE FROM `bancotp`.`telefone` WHERE(`Id_tel` = {atendente.IdTelefone});"
-                      + $"DELETE FROM `bancotp`.`endereco` WHERE(`Id_endereco` = {atendente.IdEndereco});";
+                      + $"DELETE FROM `bancotp`.`endereco` WHERE(`Id_endereco` = {atendente.IdEndereco});"+"COMMIT;";
 
             if (atendente.IdAtendente != null)
             {
@@ -280,7 +283,10 @@ namespace Bike.Controllers
             return View("AtendentesCadastrados");
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
         [HttpPost]
         public IActionResult AlugarBicicleta(Bicicleta Bicicleta)
         {
