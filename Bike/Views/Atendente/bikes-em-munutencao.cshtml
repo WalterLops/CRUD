@@ -93,8 +93,9 @@
                 <p>Valor: R$ 189,99</p>
                 <h3>Descrição:</h3>
                 <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dolores, maiores molestias dolorem pariatur, voluptas quisquam repudiandae illum ab culpa saepe! Nihil temporibus, placeat rem tenetur obcaecati deserunt nam laudantium.</p> <!--Model.Descricao-->
-                <form asp-action="ConcluirManutencao" id="@bicicleta.IdBicicleta"> <!--Manutence_Model.GetHashCode()-->
-                    <button class="btn btn-green" asp-action="ConcluirManutencao" >Concluir manutenção</button> <!--name="Model.IdManutencao" value="Model.IdManutencao"-->
+                        <form asp-action="BicicletasDisponiveis" id="@bicicleta.IdBicicleta">
+                            <!--Manutence_Model.GetHashCode()-->
+                            <button class="btn btn-green" asp-action="BicicletasDisponiveis">Concluir manutenção</button> <!--name="Model.IdManutencao" value="Model.IdManutencao"-->
                 </form>
             </div>
 

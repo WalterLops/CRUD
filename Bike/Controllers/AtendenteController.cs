@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using Savage.Data;
+using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Bike.Controllers
 {
@@ -283,10 +285,7 @@ namespace Bike.Controllers
             return View("AtendentesCadastrados");
         }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> main
         [HttpPost]
         public IActionResult AlugarBicicleta(Bicicleta Bicicleta)
         {
@@ -302,9 +301,20 @@ namespace Bike.Controllers
         }
 
         [HttpPost]
-        public IActionResult DevolverBicicleta(Bicicleta Bicicleta)
+        public IActionResult DevolverBicicleta(Bicicleta bicicleta)
         {
-            // 
+            var query = $"UPDATE `bancotp`.`bicicleta` SET `Status_emprestimo` = '0' WHERE(`Id_bicicleta` = {bicicleta.IdBicicleta});";
+            if (bicicleta.IdBicicleta != null)
+            {
+                using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        var result = command.ExecuteNonQuery();
+                    }
+                }
+            }
             return View("bikes-em-munutencao");
         }
 

@@ -12,6 +12,7 @@ using MySqlConnector;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Microsoft.EntityFrameworkCore.Metadata;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Bike.Controllers
 {
@@ -49,9 +50,10 @@ namespace Bike.Controllers
             var id = AlugarController.DecobreId(aluga.Cpf);
             if (aluga.IdBicicleta != null)
             {
-
-                var query = $"call sp_atualizastatusbike({aluga.IdBicicleta}); " +
-                           $"INSERT INTO `bancotp`.`aluga` (`Id_bicicleta`, `Id_cliente`) VALUES ({aluga.IdBicicleta}, {id});";
+                var query = $"START TRANSACTION;" +
+                            $"call sp_atualizastatusbike({aluga.IdBicicleta}); " +
+                           $"INSERT INTO `bancotp`.`aluga` (`Id_bicicleta`, `Id_cliente`) VALUES ({aluga.IdBicicleta}, {id});"
+                           + "COMMIT;";
                 using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
                 {
                     connection.Open();
@@ -77,9 +79,11 @@ namespace Bike.Controllers
                     {
                         while (reader.Read())
                         {
+
                             id = Convert.ToInt32(reader["Id_cliente"]);
                         }
                     }
+
                 }
             }
             return id;
