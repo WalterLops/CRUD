@@ -272,6 +272,13 @@ namespace Bike.Controllers
         }
 
         [HttpPost]
+        public IActionResult AtualizarBicicleta(Bicicleta Bicicleta)
+        {
+        
+            return View("AtualizarBicicleta");
+        }
+
+        [HttpPost]
         public IActionResult AlugarBicicleta(Bicicleta Bicicleta)
         {
             // 
