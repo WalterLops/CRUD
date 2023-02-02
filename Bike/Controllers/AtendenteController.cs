@@ -77,7 +77,16 @@ namespace Bike.Controllers
         [HttpPost]
         public IActionResult DeleteBicicleta(Bicicleta bicicleta)
         {
-            var query = $"DELETE FROM `bancotp`.`bicicleta` WHERE(`Id_bicicleta` = {bicicleta.IdBicicleta});";
+            var idCliente = AtendenteController.DecobreIdCliente(bicicleta.IdBicicleta);
+            var query = "";
+
+            var query1 = $"DELETE FROM `bancotp`.`bicicleta` WHERE(`Id_bicicleta` = {bicicleta.IdBicicleta});";
+
+            var query2 = $"DELETE FROM `bancotp`.`aluga` WHERE(`Id_cliente` = {idCliente}) and(`Id_bicicleta` = {bicicleta.IdBicicleta});" +
+                         $"DELETE FROM `bancotp`.`bicicleta` WHERE(`Id_bicicleta` = {bicicleta.IdBicicleta});";
+
+
+            query = bicicleta.StatusEmprestimo == 1 ? query1 : query2;
 
             if (bicicleta.IdBicicleta != null)
             {
@@ -271,12 +280,6 @@ namespace Bike.Controllers
             return View("AtendentesCadastrados");
         }
 
-        [HttpPost]
-        public IActionResult AtualizarBicicleta(Bicicleta Bicicleta)
-        {
-        
-            return View("AtualizarBicicleta");
-        }
 
         [HttpPost]
         public IActionResult AlugarBicicleta(Bicicleta Bicicleta)
@@ -295,5 +298,25 @@ namespace Bike.Controllers
         /*
          * -----------------FIM ATENDENTE----------------------
          */
+        public static int DecobreIdCliente(int idBike)
+        {
+            var id = 0;
+            using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+            {
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand($"SELECT aluga.Id_cliente FROM aluga Where  aluga.Id_bicicleta ={idBike}", connection))
+                {
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            id = Convert.ToInt32(reader["Id_cliente"]);
+                        }
+                    }
+                }
+            }
+            return id;
+        }
     }
+
 }

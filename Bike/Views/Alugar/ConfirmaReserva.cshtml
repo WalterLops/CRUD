@@ -176,7 +176,19 @@
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" value="Alugar" class="btn btn-green text-end" />
+        </form>
+        <form asp-action="AlugarBicicleta">
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" type="text" id="Cpf" value=@Model.Cpf name="Cpf" placeholder="CPF do cliente">
+                </div>
+                <div class="col">
+                    <input type="submit" value="Alugar" class="btn btn-green text-end" />
+                </div>
+                <div class="invisivel">
+                    <input class="form-control" type="text" id="IdBicicleta" value=@Model.IdBicicleta name="IdBicicleta" placeholder="CPF do cliente">
+                </div>
+             </div>
         </form>
     </div>
 

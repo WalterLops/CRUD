@@ -1,0 +1,156 @@
+@model BikeVale.Models.Bicicleta;
+@using BikeVale.Models;
+@using MySqlConnector;
+@{
+    ViewData["Title"] = "ClientesCadastrados";
+
+    List<Bicicleta> Listabicicleta = new List<Bicicleta>();
+
+    using (MySqlConnection connection = new MySqlConnection("server=localhost;userid=teste@;password=123456;database=bancotp"))
+    {
+        connection.Open();
+        using (MySqlCommand command = new MySqlCommand($"SELECT bicicleta.Id_bicicleta, bicicleta.Modelo, bicicleta.Modalidade, bicicleta.Qtd_marchas, bicicleta.Status_emprestimo  FROM bancotp.bicicleta;", connection))
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+
+                Bicicleta c1 = new Bicicleta(Convert.ToInt32(reader["Id_bicicleta"]), (reader["Modelo"]).ToString(), 
+                                (reader["Modalidade"]).ToString(), Convert.ToInt32(reader["Qtd_marchas"]), 
+                                Convert.ToInt32(reader["Status_emprestimo"]));
+                Listabicicleta.Add(c1);
+            }
+        }
+    }
+}
+
+
+<div class="container">
+    <h1 class="title-h1">Bikes disponiveis e Alugadas</h1>
+    <div class="container">
+       @{    foreach (Bicicleta bicicleta in Listabicicleta)
+    {  
+        <div class="row">
+            <div class="col">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop_@bicicleta.IdBicicleta">
+                    <img src="/images/img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S">
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop_@bicicleta.IdBicicleta" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="/images/img/SPECIALIZED-FUSE-S.jpg" alt="SPECIALIZED-FUSE-S" class="imgModal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-bike col">
+                <h3>@bicicleta.Modelo</h3>
+                <div class="info-ln">
+                    <div><span>Modalidade: @bicicleta.Modalidade</span></div>
+                    <div><span>Marchas: @bicicleta.QtdMarchas</span></div>
+                </div>
+            </div>
+            <div class="col">
+                <h3>Recursos</h3>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Aro 29"</td>
+                            <td>Freio disco hidráulico</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Grupo Sram</td>
+                            <td>Pneu 3.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="row">
+                    <div class="col">
+                        <form  asp-action="AlugarBicicleta" id="Alugar_@bicicleta.IdBicicleta">
+                            <button asp-action="AlugarBicicleta"type="submit" type="button" class="btn btn-green">Alugar</button>
+                        </form>
+                    </div>
+                    
+                    <div class="col">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalManutencao01">Manutenção</button>
+                    </div>
+
+                    <div class="col">
+                        <form  asp-action="AtualizarBicicleta" id="Atualizar_@bicicleta.IdBicicleta">
+                            <button  asp-action="AtualizarBicicleta" class="btn btn-primary"  name="IdBicicleta" value="@bicicleta.IdBicicleta">Atualizar</button>
+                        </form>
+                    </div>
+                    
+                    <div class="col">
+                        <form  asp-action="DeleteBicicleta" id="Deletar_@bicicleta.IdBicicleta">
+                            <button asp-action="DeleteBicicleta" type="submit" class="btn btn-danger" onclick="alerta()" name="IdBicicleta" value="@bicicleta.IdBicicleta">Excluir</button>
+                        </form>
+                    </div>
+                </div>                  
+                                
+                <!-- Modal Manutenção-->
+                <div class="modal fade" id="modalManutencao01" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="modalManutencao01Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <form asp-action="ManutecaoBicicleta" id="Manutencao_@bicicleta.IdBicicleta">
+                                    <div class="row">
+                                        <label for="preco" class="label-manutencao col">Preço:</label>
+                                        <input type="text" id="preco" placeholder="0,00" class="col-md-8">
+                                    </div>
+
+                                    <div class="row">
+                                        <label for="desc" class="label-manutencao">Descrição da mautenção:</label>
+                                        <textarea name="desc" id="desc" cols="30" rows="10"
+                                            placeholder="Foi feito a troca de..."></textarea>
+                                    </div>
+
+                                    <div class="row padding"><button asp-action="ManutecaoBicicleta"type="submit" class="btn btn-green" name="IdBicicleta" value="@bicicleta.IdBicicleta">Criar manutenção</button></div>
+                                               
+                               </form>
+                               
+                                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    }
+      <script>
+          function alerta() {
+              alert("Bicicleta Excluida com Sucesso!");
+          }
+
+          function alertaAtualizar() {
+              alert("Bicicleta Atualizada com Sucesso!");
+          }
+
+          function limparFormulario() {
+              document.getElementById("formulario").reset();
+          }
+
+      </script>
+
+        }
+    </div>
+</div>
